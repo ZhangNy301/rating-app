@@ -7,8 +7,11 @@ import random
 import requests
 from dotenv import load_dotenv
 
-# 加载环境变量
-load_dotenv()
+# 加载环境变量（可选）
+try:
+    load_dotenv()
+except:
+    pass
 
 app = Flask(__name__)
 
@@ -292,7 +295,7 @@ def query_ai():
             })
             
             # 添加历史对话
-            for msg in history[-4:]:
+            for msg in history[-2:]:
                 messages.append({
                     "role": msg["role"],
                     "content": msg["content"]
@@ -347,5 +350,4 @@ def query_ai():
 
 if __name__ == '__main__':
     init_db()
-    port = int(os.getenv('PORT', 5000))
-    app.run(host='0.0.0.0', port=port) 
+    app.run(debug=True) 
