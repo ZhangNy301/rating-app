@@ -66,10 +66,15 @@ def load_samples():
 def init_db():
     conn = sqlite3.connect('ratings.db')
     c = conn.cursor()
+    
+    # 先删除旧表（如果存在）
+    c.execute('DROP TABLE IF EXISTS ratings')
+    
+    # 创建新表
     c.execute('''
         CREATE TABLE IF NOT EXISTS ratings
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
-         image_id INTEGER,
+         image_id TEXT,
          rater_id TEXT,
          image_quality INTEGER,
          text_quality INTEGER,
@@ -113,35 +118,40 @@ def submit_rating():
     
     existing_rating = c.fetchone()
     
-    if existing_rating:
-        # 更新现有评分
-        c.execute('''
-            UPDATE ratings 
-            SET image_quality = ?, text_quality = ?, consistency = ?, timestamp = CURRENT_TIMESTAMP
-            WHERE image_id = ? AND rater_id = ?
-        ''', (
-            data['image_quality'],
-            data['text_quality'],
-            data['consistency'],
-            image_id,
-            data['rater_id']
-        ))
-    else:
-        # 插入新评分
-        c.execute('''
-            INSERT INTO ratings (image_id, rater_id, image_quality, text_quality, consistency, timestamp)
-            VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
-        ''', (
-            image_id,
-            data['rater_id'],
-            data['image_quality'],
-            data['text_quality'],
-            data['consistency']
-        ))
-    
-    conn.commit()
-    conn.close()
-    return jsonify({'status': 'success'})
+    try:
+        if existing_rating:
+            # 更新现有评分
+            c.execute('''
+                UPDATE ratings 
+                SET image_quality = ?, text_quality = ?, consistency = ?, timestamp = CURRENT_TIMESTAMP
+                WHERE image_id = ? AND rater_id = ?
+            ''', (
+                data['image_quality'],
+                data['text_quality'],
+                data['consistency'],
+                image_id,
+                data['rater_id']
+            ))
+        else:
+            # 插入新评分
+            c.execute('''
+                INSERT INTO ratings (image_id, rater_id, image_quality, text_quality, consistency, timestamp)
+                VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            ''', (
+                image_id,
+                data['rater_id'],
+                data['image_quality'],
+                data['text_quality'],
+                data['consistency']
+            ))
+        
+        conn.commit()
+        conn.close()
+        return jsonify({'status': 'success'})
+    except Exception as e:
+        conn.rollback()
+        conn.close()
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 @app.route('/clean_ratings/<rater_id>')
 def clean_ratings(rater_id):
@@ -159,10 +169,10 @@ def clean_ratings(rater_id):
         # 清理并更新数据
         for row in results:
             rating_id = row[0]
-            # 将分数限制在1-5范围内
-            image_quality = min(max(1, min(5, row[1])), 5) if row[1] != 50 else 0
-            text_quality = min(max(1, min(5, row[2])), 5) if row[2] != 50 else 0
-            consistency = min(max(1, min(5, row[3])), 5) if row[3] != 50 else 0
+            # 将分数限制在1-3范围内
+            image_quality = min(max(1, min(3, row[1])), 3) if row[1] != 30 else 0
+            text_quality = min(max(1, min(3, row[2])), 3) if row[2] != 30 else 0
+            consistency = min(max(1, min(3, row[3])), 3) if row[3] != 30 else 0
             
             c.execute('''
                 UPDATE ratings

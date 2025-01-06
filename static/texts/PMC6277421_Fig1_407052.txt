@@ -1,1 +1,0 @@
- Each image is a maximum projection of a 3-D stack of labeled GCs imaged in vivo. Each series shows a GC developing with its developmental age noted in the upper-left of the image (P, postnatal day). Arrows indicate a parallel fiber axon emerging from the soma and arrowheads indicate the appearance of a claw on a dendrite. Scale bar is 5 µm
