@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图文对评分</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            width: 100%;
+            min-height: 100vh;
+            gap: 20px;
+        }
+        .main-content {
+            padding: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .right-panel {
+            padding: 20px;
+            background-color: #f8f9fa;
+            height: 100vh;
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .image-container {
+            max-width: 100%;
+            margin: 20px 0;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .text-container {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            border-left: 4px solid #4CAF50;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .sample-text {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .rating-form {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .rating-section {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .rating-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4CAF50;
+        }
+        .rating-question {
+            position: relative;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #4CAF50;
+            min-height: 160px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .rating-question p {
+            margin: 0;
+            padding: 0;
+            font-size: 1.1em;
+            color: #2c3e50;
+            min-height: 50px;
+            margin-bottom: 60px;
+        }
+        .yes-no-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 20px;
+            width: 200px;
+            box-sizing: border-box;
+        }
+        .yes-no-button {
+            flex: 1;
+            height: 40px;
+            min-width: 90px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        .yes-no-button.yes {
+            background-color: #4CAF50;
+            color: white;
+            opacity: 0.8;
+        }
+        .yes-no-button.no {
+            background-color: #dc3545;
+            color: white;
+            opacity: 0.8;
+        }
+        .yes-no-button.selected {
+            opacity: 1;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .yes-no-button:not(.selected) {
+            opacity: 0.7;
+        }
+        .navigation {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .nav-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            margin: 0 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .nav-button:hover {
+            background-color: #45a049;
+        }
+        .nav-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .progress {
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .progress h2 {
+            margin: 0;
+            color: #333;
+        }
+        /* AI助手样式 */
+        .ai-assistant {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .ai-assistant-header {
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ai-quick-actions {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .ai-quick-button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .ai-quick-button:hover {
+            background-color: #45a049;
+        }
+        /* AI助手其他样式 */
+        .ai-assistant-content {
+            flex: 1;
+            overflow-y: auto;
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 10px;
+        }
+        .ai-assistant-input {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+            background-color: white;
+        }
+        .ai-assistant-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .ai-assistant-input button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .ai-chat-history {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 15px;
+            min-height: calc(100vh - 250px);
+        }
+        .ai-message {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .ai-message-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .ai-message-icon.user {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        .ai-message-icon.assistant {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .ai-message-content {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .ai-message.user .ai-message-content {
+            background-color: #e9ecef;
+        }
+        .ai-message.assistant .ai-message-content {
+            background-color: white;
+        }
+        .ai-loading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            padding: 20px;
+            justify-content: center;
+        }
+        .ai-error {
+            color: #dc3545;
+            padding: 10px;
+            border-left: 4px solid #dc3545;
+            background-color: #fff;
+            margin: 10px 0;
+        }
+        .ai-response-title {
+            color: #2c3e50;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 15px 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #4CAF50;
+        }
+        .ai-response {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .ai-response h1 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-top: 15px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .ai-response h2 {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-top: 12px;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #3498db;
+        }
+
+        .ai-response h3 {
+            color: #34495e;
+            font-size: 1.1em;
+            margin-top: 10px;
+            margin-bottom: 8px;
+            padding-left: 24px;
+            border-left: 3px solid #3498db;
+        }
+
+        .ai-response strong {
+            color: #c0392b;
+            font-weight: 600;
+        }
+
+        .ai-response ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .ai-response ul li {
+            margin: 5px 0;
+            list-style-type: disc;
+        }
+
+        .ai-response ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .ai-response ol li {
+            margin: 5px 0;
+        }
+
+        .ai-response p {
+            margin: 10px 0;
+        }
+
+        .current-context {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .ai-translation {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 14px;
+            line-height: 1.6;
+            border-left: 4px solid #3498db;
+        }
+
+        /* 添加星级评分显示区域的样式 */
+        .rating-stars-container {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .rating-stars-row {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+        }
+
+        .rating-stars-label {
+            width: 120px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+        }
+
+        .star {
+            font-size: 20px;
+            color: #ddd;  /* 默认灰色 */
+            transition: color 0.3s ease;
+        }
+
+        .star.active {
+            color: #ffd700;  /* 激活时金色 */
+        }
+
+        .star.inactive {
+            color: #666;  /* 未满足时深灰色 */
+        }
+
+        /* 修改评分总结样式 */
+        .rating-summary {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            transform: scale(0.8) rotate(-15deg);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.6em;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .rating-summary.show {
+            opacity: 1;
+            transform: scale(1) rotate(0);
+        }
+
+        .rating-summary i {
+            font-size: 1.2em;
+        }
+
+        @keyframes stampEffect {
+            0% {
+                transform: scale(2) rotate(-25deg);
+                opacity: 0;
+            }
+            40% {
+                transform: scale(1.2) rotate(-15deg);
+                opacity: 0.7;
+            }
+            70% {
+                transform: scale(0.9) rotate(5deg);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        .rating-summary.stamp {
+            animation: stampEffect 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        /* 添加页面切换动画 */
+        @keyframes pageOut {
+            0% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes pageIn {
+            0% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .page-transition-out {
+            animation: pageOut 0.5s ease-in-out forwards;
+        }
+
+        .page-transition-in {
+            animation: pageIn 0.5s ease-in-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 主要内容区域 -->
+        <div class="main-content">
+            <div class="progress">
+                <h2>进度: <span id="current-index">1</span>/<span id="total-samples">0</span></h2>
+            </div>
+
+            <div class="image-container">
+                <img id="sample-image" src="" alt="评分图片">
+            </div>
+
+            <div class="text-container">
+                <div class="sample-text" id="sample-text"></div>
+            </div>
+
+            <div class="rating-form">
+                <div class="rating-section">
+                    <div class="rating-navigation">
+                        <button class="nav-button" onclick="previousQuestion()" id="prev-question-btn">上一个问题</button>
+                        <span id="question-progress">问题 1/15</span>
+                    </div>
+                    <h2 id="current-category">图像质量评估</h2>
+                    <div id="current-question" class="rating-question">
+                        <!-- 当前问题将在这里显示 -->
+                    </div>
+                </div>
+
+                <!-- 添加星级评分显示区域 -->
+                <div class="rating-stars-container">
+                    <h2>当前评分状态</h2>
+                    <div class="rating-stars-row">
+                        <div class="rating-stars-label">图像质量</div>
+                        <div class="rating-stars" id="image-quality-stars">
+                            <i class="fas fa-star star" data-index="0"></i>
+                            <i class="fas fa-star star" data-index="1"></i>
+                            <i class="fas fa-star star" data-index="2"></i>
+                            <i class="fas fa-star star" data-index="3"></i>
+                            <i class="fas fa-star star" data-index="4"></i>
+                        </div>
+                    </div>
+                    <div class="rating-stars-row">
+                        <div class="rating-stars-label">文本质量</div>
+                        <div class="rating-stars" id="text-quality-stars">
+                            <i class="fas fa-star star" data-index="0"></i>
+                            <i class="fas fa-star star" data-index="1"></i>
+                            <i class="fas fa-star star" data-index="2"></i>
+                            <i class="fas fa-star star" data-index="3"></i>
+                            <i class="fas fa-star star" data-index="4"></i>
+                        </div>
+                    </div>
+                    <div class="rating-stars-row">
+                        <div class="rating-stars-label">图文一致性</div>
+                        <div class="rating-stars" id="consistency-quality-stars">
+                            <i class="fas fa-star star" data-index="0"></i>
+                            <i class="fas fa-star star" data-index="1"></i>
+                            <i class="fas fa-star star" data-index="2"></i>
+                            <i class="fas fa-star star" data-index="3"></i>
+                            <i class="fas fa-star star" data-index="4"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="nav-button" onclick="previousSample()" id="prev-btn" disabled>上一张图片</button>
+                <button class="nav-button" onclick="finishRating()" id="finish-btn" style="display: none;">完成评分</button>
+            </div>
+        </div>
+
+        <!-- 右侧AI助手面板 -->
+        <div class="right-panel">
+            <div class="ai-assistant" id="aiAssistant">
+                <div class="ai-assistant-header">
+                    <h3><i class="fas fa-robot"></i> AI助手</h3>
+                </div>
+                <div class="ai-quick-actions">
+                    <button class="ai-quick-button" onclick="explainContext()">
+                        <i class="fas fa-book-open"></i> 解释上下文
+                    </button>
+                    <button class="ai-quick-button" onclick="explainTerms()">
+                        <i class="fas fa-graduation-cap"></i> 专业术语解释
+                    </button>
+                    <button class="ai-quick-button" onclick="translateCaption()">
+                        <i class="fas fa-language"></i> 翻译原文
+                    </button>
+                </div>
+                <div class="ai-assistant-content" id="aiAssistantContent">
+                    <div class="ai-chat-history" id="aiChatHistory"></div>
+                </div>
+                <div class="ai-assistant-input">
+                    <input type="text" id="aiQuery" placeholder="输入要查询的内容，或选中文本后按Ctrl+Q...">
+                    <button onclick="queryAI()">查询</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量声明
+        let currentIndex = 0;
+        let ratings = [];
+        let raterId = null;
+        let samples = [];
+        let totalSamples = 0;
+
+        // 评分问题配置
+        const ratingQuestions = {
+            imageQuality: [
+                "图像是否清晰？（无明显模糊、噪点或伪影）",
+                "图像的亮度和对比度是否适中？（不会太亮或太暗）",
+                "图像的细节是否清楚？（可以看清重要部位的细节）",
+                "图像的视角和范围是否合适？（拍摄角度合理，覆盖了需要展示的区域）",
+                "图像是否没有干扰元素？（无不必要的遮挡、反光或其他干扰）"
+            ],
+            textQuality: [
+                "文本的语言是否通顺易懂？（表达清晰，没有明显的语法错误）",
+                "描述是否完整？（包含了主要观察发现）",
+                "结构是否合理？（有明确的观察内容和结论）",
+                "用词是否准确？（使用恰当的描述词汇）",
+                "结论是否明确？（给出了清晰的诊断或建议）"
+            ],
+            consistency: [
+                "文字描述的内容是否能在图像中找到对应？",
+                "图像中的主要特征是否在文本中都有描述？",
+                "描述的位置信息是否与图像相符？",
+                "文本的重点描述是否与图像的明显特征相符？",
+                "整体的诊断结论是否与图像表现相符？"
+            ]
+        };
+
+        // 添加问题导航相关变量
+        let currentQuestionIndex = 0;
+        const totalQuestions = 15; // 5个问题 × 3个类别
+
+        // 获取当前问题的类别和索引
+        function getCurrentQuestionInfo() {
+            let category, categoryIndex;
+            if (currentQuestionIndex < 5) {
+                category = 'image';
+                categoryIndex = currentQuestionIndex;
+            } else if (currentQuestionIndex < 10) {
+                category = 'text';
+                categoryIndex = currentQuestionIndex - 5;
+            } else {
+                category = 'consistency';
+                categoryIndex = currentQuestionIndex - 10;
+            }
+            return { category, categoryIndex };
+        }
+
+        // 更新当前问题显示
+        function updateCurrentQuestion() {
+            const { category, categoryIndex } = getCurrentQuestionInfo();
+            const categoryTitles = {
+                'image': '图像质量评估',
+                'text': '文本质量评估',
+                'consistency': '图文一致性评估'
+            };
+            
+            // 更新类别标题和问题进度
+            document.getElementById('current-category').textContent = categoryTitles[category];
+            document.getElementById('question-progress').textContent = `问题 ${currentQuestionIndex + 1}/15`;
+            
+            // 获取当前问题
+            let question;
+            if (category === 'image') {
+                question = ratingQuestions.imageQuality[categoryIndex];
+            } else if (category === 'text') {
+                question = ratingQuestions.textQuality[categoryIndex];
+            } else {
+                question = ratingQuestions.consistency[categoryIndex];
+            }
+            
+            // 更新问题显示
+            const currentQuestion = document.getElementById('current-question');
+            currentQuestion.innerHTML = `
+                <p>${question}</p>
+                <div class="yes-no-buttons">
+                    <button type="button" class="yes-no-button yes" onclick="setAnswer('${category}', ${categoryIndex}, 1)">是</button>
+                    <button type="button" class="yes-no-button no" onclick="setAnswer('${category}', ${categoryIndex}, 0)">否</button>
+                </div>
+            `;
+            
+            // 更新按钮状态
+            document.getElementById('prev-question-btn').disabled = currentQuestionIndex === 0;
+            
+            // 如果有已保存的答案，显示选中状态
+            if (ratings[currentIndex]) {
+                const rating = ratings[currentIndex];
+                const buttons = currentQuestion.querySelectorAll('.yes-no-button');
+                let score;
+                if (category === 'image') score = rating.image_quality;
+                else if (category === 'text') score = rating.text_quality;
+                else score = rating.consistency;
+                
+                if (score !== undefined) {
+                    buttons.forEach(button => {
+                        button.classList.remove('selected');
+                        if ((categoryIndex < score && button.classList.contains('yes')) ||
+                            (categoryIndex >= score && button.classList.contains('no'))) {
+                            button.classList.add('selected');
+                        }
+                    });
+                }
+            }
+
+            // 在最后一个问题回答后显示总结
+            if (currentQuestionIndex === totalQuestions - 1) {
+                setTimeout(() => {
+                    showRatingSummary();
+                }, 500);
+            }
+        }
+
+        // 问题导航函数
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                updateCurrentQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < totalQuestions - 1) {
+                // 检查当前问题是否已回答
+                const { category, categoryIndex } = getCurrentQuestionInfo();
+                const questionDiv = document.getElementById('current-question');
+                const hasAnswer = questionDiv.querySelector('.yes-no-button.selected');
+                
+                if (!hasAnswer) {
+                    alert('请先回答当前问题');
+                    return;
+                }
+                
+                currentQuestionIndex++;
+                updateCurrentQuestion();
+            } else {
+                // 在最后一个问题时，检查所有问题是否都已回答
+                if (checkAllQuestionsAnswered()) {
+                    nextSample();
+                } else {
+                    alert('请确保所有问题都已回答');
+                }
+            }
+        }
+
+        // 检查所有问题是否都已回答
+        function checkAllQuestionsAnswered() {
+            const rating = ratings[currentIndex] || {};
+            const imageButtons = document.querySelectorAll('[id^="image-q"] .yes-no-button.selected');
+            const textButtons = document.querySelectorAll('[id^="text-q"] .yes-no-button.selected');
+            const consistencyButtons = document.querySelectorAll('[id^="consistency-q"] .yes-no-button.selected');
+            
+            // 如果已经保存了评分，直接返回true
+            if (rating.image_quality !== undefined && 
+                rating.text_quality !== undefined && 
+                rating.consistency !== undefined) {
+                return true;
+            }
+            
+            // 如果正在评分过程中，检查当前问题是否已回答
+            const currentQuestion = document.querySelector('.yes-no-button.selected');
+            return currentQuestion !== null;
+        }
+
+        // 修改updateSample函数
+        function updateSample() {
+            document.getElementById('current-index').textContent = currentIndex + 1;
+            
+            const currentSample = samples[currentIndex];
+            if (!currentSample) {
+                console.error('Sample not found for index:', currentIndex);
+                return;
+            }
+
+            // 更新图片和标题
+            const img = document.getElementById('sample-image');
+            img.src = currentSample.image_url;
+            img.alt = `医学图像 ${currentIndex + 1}`;
+            img.onerror = function() {
+                console.error('Failed to load image:', currentSample.image_url);
+                this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="50%" y="50%" text-anchor="middle">图片加载失败</text></svg>';
+            };
+
+            // 更新文本
+            document.getElementById('sample-text').textContent = currentSample.text;
+            
+            // 更新按钮状态
+            document.getElementById('prev-btn').disabled = currentIndex === 0;
+            document.getElementById('finish-btn').style.display = 'none';
+
+            // 重置当前问题索引并更新问题显示
+            currentQuestionIndex = 0;
+            
+            // 确保问题容器存在并具有正确的样式
+            const currentQuestion = document.getElementById('current-question');
+            if (!currentQuestion.classList.contains('rating-question')) {
+                currentQuestion.classList.add('rating-question');
+            }
+            
+            updateCurrentQuestion();
+
+            // 重置所有星星状态为默认状态（浅灰色）
+            const categories = ['image', 'text', 'consistency'];
+            categories.forEach(category => {
+                const starsContainer = document.getElementById(`${category}-quality-stars`);
+                if (starsContainer) {
+                    const stars = starsContainer.querySelectorAll('.star');
+                    stars.forEach(star => {
+                        star.classList.remove('active', 'inactive');
+                    });
+                }
+            });
+
+            // 如果当前图文对已有评分，则更新星星状态
+            if (ratings[currentIndex]) {
+                resetStarsDisplay();
+            }
+            
+            // 强制应用样式
+            document.querySelectorAll('.yes-no-buttons').forEach(container => {
+                Object.assign(container.style, {
+                    position: 'relative',
+                    left: '15px',
+                    width: '180px',
+                    display: 'flex',
+                    gap: '10px'
+                });
+            });
+            
+            document.querySelectorAll('.yes-no-button').forEach(button => {
+                Object.assign(button.style, {
+                    width: '80px',
+                    height: '36px',
+                    margin: '0',
+                    padding: '0',
+                    flex: 'none'
+                });
+            });
+
+            // 移除已存在的评分总结
+            const existingSummary = document.querySelector('.rating-summary');
+            if (existingSummary) {
+                existingSummary.remove();
+            }
+        }
+
+        // 修改setAnswer函数
+        function setAnswer(category, questionIndex, value) {
+            // 如果正在显示评分总结，禁止处理新的答案
+            if (document.querySelector('.rating-summary.show')) {
+                return;
+            }
+
+            // 更新当前问题的按钮状态
+            const currentQuestion = document.getElementById('current-question');
+            const buttons = currentQuestion.querySelectorAll('.yes-no-button');
+            
+            buttons.forEach(button => {
+                button.classList.remove('selected');
+                if ((value === 1 && button.classList.contains('yes')) ||
+                    (value === 0 && button.classList.contains('no'))) {
+                    button.classList.add('selected');
+                }
+            });
+
+            // 更新星星状态
+            updateStarsDisplay(category, questionIndex, value);
+
+            // 等待一小段时间确保状态更新完成
+            setTimeout(() => {
+                if (currentQuestionIndex < totalQuestions - 1) {
+                    currentQuestionIndex++;
+                    updateCurrentQuestion();
+                } else {
+                    // 在最后一个问题时，显示评分总结并延迟进入下一个样本
+                    showRatingSummary();
+                    
+                    // 在显示评分总结期间禁用所有按钮
+                    const allButtons = document.querySelectorAll('.yes-no-button');
+                    allButtons.forEach(button => {
+                        button.disabled = true;
+                    });
+                    
+                    if (currentIndex < totalSamples - 1) {
+                        setTimeout(() => {
+                            // 添加页面切换动画
+                            const mainContent = document.querySelector('.main-content');
+                            mainContent.classList.add('page-transition-out');
+
+                            setTimeout(() => {
+                                // 进入下一个样本
+                                currentIndex++;
+                                updateSample();
+                                resetAIAssistant();
+
+                                // 添加新页面的进入动画
+                                mainContent.classList.remove('page-transition-out');
+                                mainContent.classList.add('page-transition-in');
+
+                                // 移除动画类
+                                setTimeout(() => {
+                                    mainContent.classList.remove('page-transition-in');
+                                }, 500);
+                            }, 500);
+                        }, 2000);
+                    } else {
+                        // 显示完成按钮
+                        document.getElementById('finish-btn').style.display = 'inline';
+                    }
+                }
+            }, 100);
+        }
+
+        // 修改saveCurrentRating函数
+        function saveCurrentRating(isGoingBack = false) {
+            const rating = {
+                image_id: samples[currentIndex].id,
+                rater_id: raterId,
+                image_quality: (ratings[currentIndex] || {}).image_quality || 0,
+                text_quality: (ratings[currentIndex] || {}).text_quality || 0,
+                consistency: (ratings[currentIndex] || {}).consistency || 0
+            };
+
+            // 如果是返回上一个样本，或者已经完成了所有问题，就保存评分
+            if (isGoingBack || checkAllQuestionsAnswered()) {
+                ratings[currentIndex] = rating;
+
+                fetch('/submit_rating', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(rating)
+                }).catch(error => {
+                    console.error('Error saving rating:', error);
+                });
+
+                return true;
+            } else {
+                alert('请完成当前问题的评分');
+                return false;
+            }
+        }
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取评分者ID
+            raterId = localStorage.getItem('raterId');
+            if (!raterId) {
+                window.location.href = '/';
+                return;
+            }
+
+            try {
+                // 从服务器获取样本数据
+                samples = JSON.parse('{{ samples|tojson|safe }}');
+                totalSamples = samples.length;
+
+                // 更新总样本数显示
+                document.getElementById('total-samples').textContent = totalSamples;
+
+                if (totalSamples === 0) {
+                    alert('没有找到可评分的样本');
+                    window.location.href = '/';
+                    return;
+                }
+
+                // 初始化界面
+                updateSample();
+                resetAIAssistant();
+                
+                // 添加键盘快捷键
+                document.addEventListener('keydown', function(event) {
+                    if (event.ctrlKey && event.key === 'q') {
+                        const selectedText = window.getSelection().toString().trim();
+                        if (selectedText) queryAI(selectedText);
+                    }
+                });
+            } catch (error) {
+                console.error('Error initializing:', error);
+                alert('初始化失败，请刷新页面重试');
+            }
+        });
+
+        // AI助手快捷功能
+        function explainContext() {
+            const text = document.getElementById('sample-text').textContent;
+            queryAI(`请解释这段医学报告的主要内容：${text}`);
+        }
+
+        function explainTerms() {
+            const text = document.getElementById('sample-text').textContent;
+            queryAI(`请列出并解释这段文本中的专业术语：${text}`);
+        }
+
+        function translateCaption() {
+            const text = document.getElementById('sample-text').textContent;
+            const translationRequest = {
+                type: 'translation',
+                text: text,
+                system_prompt: "你是一个专业的医学翻译。请直接将输入的英文医学文本翻译成中文。要求：1. 直接给出翻译结果 2. 不要解释 3. 不要添加markdown格式 4. 不要分析 5. 保持原文的简洁性。"
+            };
+            queryAI(JSON.stringify(translationRequest));
+        }
+
+        // 修改updateCategoryScore函数
+        function updateCategoryScore(category) {
+            const { categoryIndex } = getCurrentQuestionInfo();
+            let currentRating = ratings[currentIndex];
+            
+            if (!currentRating) {
+                currentRating = {
+                    image_id: samples[currentIndex].id,
+                    image_quality: 0,
+                    text_quality: 0,
+                    consistency: 0,
+                    image_answers: Array(5).fill(-1),
+                    text_answers: Array(5).fill(-1),
+                    consistency_answers: Array(5).fill(-1),
+                    sample_index: currentIndex
+                };
+                ratings[currentIndex] = currentRating;
+            }
+
+            // 确保答案数组存在
+            if (!currentRating.image_answers) currentRating.image_answers = Array(5).fill(-1);
+            if (!currentRating.text_answers) currentRating.text_answers = Array(5).fill(-1);
+            if (!currentRating.consistency_answers) currentRating.consistency_answers = Array(5).fill(-1);
+
+            // 获取当前回答
+            const isYes = document.querySelector('#current-question .yes-no-button.yes.selected') !== null;
+            const value = isYes ? 1 : 0;
+
+            // 更新答案数组
+            switch(category) {
+                case 'image':
+                    currentRating.image_answers[categoryIndex] = value;
+                    currentRating.image_quality = currentRating.image_answers.filter(v => v === 1).length;
+                    break;
+                case 'text':
+                    currentRating.text_answers[categoryIndex] = value;
+                    currentRating.text_quality = currentRating.text_answers.filter(v => v === 1).length;
+                    break;
+                case 'consistency':
+                    currentRating.consistency_answers[categoryIndex] = value;
+                    currentRating.consistency = currentRating.consistency_answers.filter(v => v === 1).length;
+                    break;
+            }
+
+            // 保存更新后的评分
+            ratings[currentIndex] = currentRating;
+        }
+
+        // 修改updateStarsDisplay函数
+        function updateStarsDisplay(category, questionIndex, value) {
+            const categoryMap = {
+                'image': 'image-quality-stars',
+                'text': 'text-quality-stars',
+                'consistency': 'consistency-quality-stars'
+            };
+
+            const starsContainer = document.getElementById(categoryMap[category]);
+            if (!starsContainer) return;
+
+            const stars = starsContainer.querySelectorAll('.star');
+            let currentRating = ratings[currentIndex];
+            
+            if (!currentRating) {
+                currentRating = {
+                    image_answers: Array(5).fill(-1),
+                    text_answers: Array(5).fill(-1),
+                    consistency_answers: Array(5).fill(-1)
+                };
+                ratings[currentIndex] = currentRating;
+            }
+
+            // 确保答案数组存在
+            if (!currentRating.image_answers) currentRating.image_answers = Array(5).fill(-1);
+            if (!currentRating.text_answers) currentRating.text_answers = Array(5).fill(-1);
+            if (!currentRating.consistency_answers) currentRating.consistency_answers = Array(5).fill(-1);
+
+            // 获取对应类别的答案数组
+            let answers;
+            switch(category) {
+                case 'image':
+                    answers = currentRating.image_answers;
+                    break;
+                case 'text':
+                    answers = currentRating.text_answers;
+                    break;
+                case 'consistency':
+                    answers = currentRating.consistency_answers;
+                    break;
+            }
+
+            // 更新当前问题的答案
+            answers[questionIndex] = value;
+
+            // 更新星星显示
+            stars.forEach((star, index) => {
+                star.classList.remove('active', 'inactive');
+                if (answers[index] !== -1) {  // 只处理已回答的问题
+                    if (answers[index] === 1) {
+                        star.classList.add('active');  // 金色，表示"是"
+                    } else {
+                        star.classList.add('inactive');  // 深灰色，表示"否"
+                    }
+                }
+            });
+
+            // 更新总分
+            switch(category) {
+                case 'image':
+                    currentRating.image_answers = answers;
+                    currentRating.image_quality = answers.filter(v => v === 1).length;
+                    break;
+                case 'text':
+                    currentRating.text_answers = answers;
+                    currentRating.text_quality = answers.filter(v => v === 1).length;
+                    break;
+                case 'consistency':
+                    currentRating.consistency_answers = answers;
+                    currentRating.consistency = answers.filter(v => v === 1).length;
+                    break;
+            }
+
+            // 保存更新后的评分
+            ratings[currentIndex] = currentRating;
+        }
+
+        // 修改resetStarsDisplay函数
+        function resetStarsDisplay() {
+            const categories = ['image', 'text', 'consistency'];
+            const currentRating = ratings[currentIndex];
+            if (!currentRating) return;
+
+            categories.forEach(category => {
+                const starsContainer = document.getElementById(`${category}-quality-stars`);
+                if (!starsContainer) return;
+
+                const stars = starsContainer.querySelectorAll('.star');
+                let answers;
+
+                switch(category) {
+                    case 'image':
+                        answers = currentRating.image_answers || Array(5).fill(-1);
+                        break;
+                    case 'text':
+                        answers = currentRating.text_answers || Array(5).fill(-1);
+                        break;
+                    case 'consistency':
+                        answers = currentRating.consistency_answers || Array(5).fill(-1);
+                        break;
+                }
+
+                stars.forEach((star, index) => {
+                    star.classList.remove('active', 'inactive');
+                    if (answers[index] !== -1) {
+                        if (answers[index] === 1) {
+                            star.classList.add('active');  // 金色，表示"是"
+                        } else {
+                            star.classList.add('inactive');  // 深灰色，表示"否"
+                        }
+                    }
+                });
+            });
+        }
+
+        // 修改getPreviousAnswer函数
+        function getPreviousAnswer(category, questionIndex) {
+            const currentRating = ratings[currentIndex];
+            if (!currentRating) return -1;
+
+            let score;
+            if (category === 'image') score = currentRating.image_quality || 0;
+            else if (category === 'text') score = currentRating.text_quality || 0;
+            else score = currentRating.consistency || 0;
+
+            // 只返回已经回答过的问题的状态
+            if (questionIndex < score) return 1;
+            else return 0;
+        }
+
+        // 添加导航函数
+        function previousSample() {
+            if (currentIndex > 0) {
+                saveCurrentRating(true);
+                currentIndex--;
+                updateSample();
+                resetAIAssistant();
+            }
+        }
+
+        function nextSample() {
+            if (currentIndex < totalSamples - 1) {
+                // 自动保存当前评分
+                const rating = {
+                    image_id: samples[currentIndex].id,
+                    rater_id: raterId,
+                    image_quality: (ratings[currentIndex] || {}).image_quality || 0,
+                    text_quality: (ratings[currentIndex] || {}).text_quality || 0,
+                    consistency: (ratings[currentIndex] || {}).consistency || 0
+                };
+                
+                ratings[currentIndex] = rating;
+
+                // 发送评分到服务器
+                fetch('/submit_rating', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(rating)
+                }).catch(error => {
+                    console.error('Error saving rating:', error);
+                });
+
+                // 进入下一个样本
+                currentIndex++;
+                updateSample();
+                resetAIAssistant();
+            }
+        }
+
+        function finishRating() {
+            // 自动导出结果
+            window.location.href = `/export_results/${raterId}`;
+        }
+
+        // 添加samples-data脚本标签
+        const samplesDataScript = document.createElement('script');
+        samplesDataScript.id = 'samples-data';
+        samplesDataScript.type = 'application/json';
+        samplesDataScript.textContent = '{{ samples|tojson|safe }}';
+        document.body.appendChild(samplesDataScript);
+
+        // 添加AI助手相关函数
+        let chatHistory = [];
+
+        function resetAIAssistant() {
+            // 清空聊天历史
+            chatHistory = [];
+            const aiChatHistory = document.getElementById('aiChatHistory');
+            aiChatHistory.innerHTML = '';
+
+            // 添加欢迎消息
+            const welcomeMessage = `
+                <div class="ai-message assistant">
+                    <div class="ai-message-icon assistant">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="ai-message-content">
+                        <p>当前文本内容为：</p>
+                        <div class="current-context">${document.getElementById('sample-text').textContent}</div>
+                        <p>您可以：</p>
+                        <ul>
+                            <li>点击上方按钮快速解释内容</li>
+                            <li>在下方输入框中输入要查询的内容</li>
+                            <li>选中文本后按Ctrl+Q快速查询</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            aiChatHistory.innerHTML = welcomeMessage;
+
+            // 清空输入框
+            document.getElementById('aiQuery').value = '';
+        }
+
+        function addMessageToHistory(role, content, isFormatted = false) {
+            const historyDiv = document.getElementById('aiChatHistory');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `ai-message ${role}`;
+            
+            const iconDiv = document.createElement('div');
+            iconDiv.className = `ai-message-icon ${role}`;
+            iconDiv.innerHTML = role === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'ai-message-content';
+            contentDiv.innerHTML = isFormatted ? content : `<p>${content}</p>`;
+            
+            messageDiv.appendChild(iconDiv);
+            messageDiv.appendChild(contentDiv);
+            historyDiv.appendChild(messageDiv);
+            
+            // 滚动到底部
+            historyDiv.scrollTop = historyDiv.scrollHeight;
+            
+            // 保存到历史记录
+            chatHistory.push({ role, content });
+        }
+
+        function formatAIResponse(response, type = 'explanation') {
+            // 对于翻译类型，直接返回纯文本结果
+            if (type === 'translation') {
+                // 移除可能的markdown标记
+                const cleanText = response
+                    .replace(/[#\-*]+/g, '')  // 移除markdown标记
+                    .replace(/\n+/g, '\n')    // 合并多余的换行
+                    .trim();                  // 移除首尾空白
+                return `<div class="ai-translation">${cleanText}</div>`;
+            }
+
+            // 其他响应的正常格式化处理
+            return response
+                .replace(/^# (.*?)$/gm, '<h1>$1</h1>')
+                .replace(/^## (.*?)$/gm, '<h2>$1</h2>')
+                .replace(/^### (.*?)$/gm, '<h3>$1</h3>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/^- (.*?)$/gm, '<li>$1</li>')
+                .replace(/(<li>.*?<\/li>\n*)+/g, '<ul>$&</ul>')
+                .replace(/^\d+\. (.*?)$/gm, '<li>$1</li>')
+                .replace(/(<li>.*?<\/li>\n*)+/g, '<ol>$&</ol>')
+                .replace(/^(?!<[huol]|<li)[^\n].*$/gm, '<p>$&</p>')
+                .replace(/\n{3,}/g, '\n\n')
+                .trim();
+        }
+
+        async function queryAI(text) {
+            let query = text;
+            let requestType = 'explanation';
+            
+            try {
+                // 检查是否是JSON格式的翻译请求
+                const parsedQuery = JSON.parse(text);
+                if (parsedQuery.type === 'translation') {
+                    query = parsedQuery.text;
+                    requestType = 'translation';
+                }
+            } catch (e) {
+                // 如果不是JSON格式，使用原始文本
+                query = text || document.getElementById('aiQuery').value.trim();
+            }
+            
+            if (!query) return;
+
+            // 清空输入框
+            document.getElementById('aiQuery').value = '';
+            
+            // 添加用户消息到历史记录
+            const displayText = requestType === 'translation' ? '请翻译此文本' : query;
+            addMessageToHistory('user', displayText);
+
+            // 添加加载消息
+            const loadingMessage = document.createElement('div');
+            loadingMessage.className = 'ai-message assistant';
+            loadingMessage.innerHTML = `
+                <div class="ai-message-icon assistant">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="ai-message-content">
+                    <div class="ai-loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>正在${requestType === 'translation' ? '翻译' : '思考'}中...</span>
+                    </div>
+                </div>
+            `;
+            document.getElementById('aiChatHistory').appendChild(loadingMessage);
+
+            try {
+                const response = await fetch('/query_ai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        context: document.getElementById('sample-text').textContent,
+                        history: chatHistory,
+                        type: requestType
+                    })
+                });
+
+                const result = await response.json();
+                
+                // 移除加载消息
+                loadingMessage.remove();
+
+                if (result.error) {
+                    addMessageToHistory('assistant', `<div class="ai-error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        ${requestType === 'translation' ? '翻译' : '查询'}失败：${result.error}
+                    </div>`, true);
+                } else {
+                    const formattedResponse = formatAIResponse(result.response, requestType);
+                    addMessageToHistory('assistant', formattedResponse, true);
+                }
+            } catch (error) {
+                // 移除加载消息
+                loadingMessage.remove();
+                
+                console.error('Error querying AI:', error);
+                addMessageToHistory('assistant', `<div class="ai-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    ${requestType === 'translation' ? '翻译' : '查询'}失败，请稍后重试
+                </div>`, true);
+            }
+        }
+
+        // 添加文本选择事件监听
+        document.addEventListener('mouseup', function(event) {
+            const selectedText = window.getSelection().toString().trim();
+            if (selectedText && event.ctrlKey) {
+                queryAI(selectedText);
+            }
+        });
+
+        // 添加评分总结的函数
+        function showRatingSummary() {
+            // 计算总分（计算"是"的数量）
+            const currentRating = ratings[currentIndex];
+            const totalScore = (currentRating.image_quality || 0) + 
+                             (currentRating.text_quality || 0) + 
+                             (currentRating.consistency || 0);
+
+            // 定义评级标准
+            const ratingLevels = [
+                { min: 13, text: "Outstanding", color: "#2ecc71", icon: "crown", desc: "卓越" },
+                { min: 10, text: "Excellent", color: "#27ae60", icon: "star", desc: "优秀" },
+                { min: 7, text: "Good", color: "#3498db", icon: "thumbs-up", desc: "良好" },
+                { min: 4, text: "Fair", color: "#f1c40f", icon: "meh", desc: "一般" },
+                { min: 2, text: "Poor", color: "#e67e22", icon: "exclamation-circle", desc: "较差" },
+                { min: 0, text: "Insufficient", color: "#e74c3c", icon: "times-circle", desc: "不足" }
+            ];
+
+            // 获取对应的评级
+            const rating = ratingLevels.find(level => totalScore >= level.min);
+
+            // 移除已存在的评分总结
+            const existingSummary = document.querySelector('.rating-summary');
+            if (existingSummary) {
+                existingSummary.remove();
+            }
+
+            // 创建新的评分总结元素
+            const summary = document.createElement('div');
+            summary.className = 'rating-summary';
+            summary.innerHTML = `
+                <i class="fas fa-${rating.icon}"></i>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+                    <span style="font-size: 1.2em;">${rating.text}</span>
+                    <span style="font-size: 0.7em; opacity: 0.9;">${rating.desc}</span>
+                    <span style="font-size: 0.6em; opacity: 0.8;">${totalScore}/15</span>
+                </div>
+            `;
+            summary.style.backgroundColor = rating.color;
+
+            // 添加到页面
+            document.body.appendChild(summary);
+
+            // 触发动画
+            setTimeout(() => {
+                summary.classList.add('show', 'stamp');
+            }, 100);
+        }
+    </script>
+</body>
+</html> 

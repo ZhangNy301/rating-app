@@ -1,0 +1,1 @@
+ Subcellular localization of MdNAC1. GFP (green fluorescent protein) or MdNAC1-GFP fusion protein were transiently expressed in Nicotiana benthamiana epidermal cells and analyzed by confocal microscopy. The green fluorescent signal in the dark field or merged field shows the localization of GFP or MdNAC1-GFP fusion protein

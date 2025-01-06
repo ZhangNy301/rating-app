@@ -1,0 +1,352 @@
+[
+  {
+    "image": "PMC7676950_FIG2_301558.jpg",
+    "text": " A glomerulus with a necrotizing segment, with rupture of the capillary walls and an adjacent crescent (methenamine silver stain (X400)",
+    "logit": 3.871373414993286,
+    "overall_rank": 16477,
+    "stratified_rank": 1
+  },
+  {
+    "image": "PMC5977169_genes-09-00229-f002_321273.jpg",
+    "text": " Subcellular localization of MdNAC1. GFP (green fluorescent protein) or MdNAC1-GFP fusion protein were transiently expressed in Nicotiana benthamiana epidermal cells and analyzed by confocal microscopy. The green fluorescent signal in the dark field or merged field shows the localization of GFP or MdNAC1-GFP fusion protein",
+    "logit": 3.0825490951538086,
+    "overall_rank": 152072,
+    "stratified_rank": 2
+  },
+  {
+    "image": "PMC9344456_Fig8_362038.jpg",
+    "text": " Axial contrast-enhanced CT images (Mini MIP) showing markedly attenuated caliber of the hepatic artery.",
+    "logit": 3.4095675945281982,
+    "overall_rank": 87045,
+    "stratified_rank": 3
+  },
+  {
+    "image": "PMC8072832_molecules-26-02370-f002_427458.jpg",
+    "text": " Kidney tissue of diabetic untreated rat showing degenerated hypocellular glomerulus (white arrow) with adjacent renal tubules showing cloudy swelling (thin black arrows) within lining epithelium.",
+    "logit": 3.0817606449127197,
+    "overall_rank": 152212,
+    "stratified_rank": 4
+  },
+  {
+    "image": "PMC8035479_jgh312520-fig-0001_413270.jpg",
+    "text": " Repeat endoscopy at 4 weeks with severe stricture in mid‐esophagus",
+    "logit": 3.3964030742645264,
+    "overall_rank": 89470,
+    "stratified_rank": 5
+  },
+  {
+    "image": "PMC8329780_feb413251-fig-0002_25707.jpg",
+    "text": " The local magnification (bottom) is 400‐fold (scale bar: 25 μm). The blue area represents nuclei. The pink area represents cytoplasm and intercellular plasm. The red arrows showed the position of the glomeruli, and the blue arrows showed the position of renal tubules",
+    "logit": 2.43593692779541,
+    "overall_rank": 288220,
+    "stratified_rank": 6
+  },
+  {
+    "image": "PMC6011115_fig2_331592.jpg",
+    "text": " CT showed multiple osteoblastic lesions in the spine",
+    "logit": 2.8202321529388428,
+    "overall_rank": 206334,
+    "stratified_rank": 7
+  },
+  {
+    "image": "PMC6277421_Fig1_407052.jpg",
+    "text": " Each image is a maximum projection of a 3-D stack of labeled GCs imaged in vivo. Each series shows a GC developing with its developmental age noted in the upper-left of the image (P, postnatal day). Arrows indicate a parallel fiber axon emerging from the soma and arrowheads indicate the appearance of a claw on a dendrite. Scale bar is 5 µm",
+    "logit": 2.476520299911499,
+    "overall_rank": 279541,
+    "stratified_rank": 8
+  },
+  {
+    "image": "PMC8811138_f1_183316.jpg",
+    "text": " GTV (green line) derived from ten phases of 4DCT",
+    "logit": 2.6959004402160645,
+    "overall_rank": 232588,
+    "stratified_rank": 9
+  },
+  {
+    "image": "PMC8566610_Fig1_103095.jpg",
+    "text": " On initial examination, CT showing a nodule in the right upper lob",
+    "logit": 3.0285935401916504,
+    "overall_rank": 162948,
+    "stratified_rank": 10
+  },
+  {
+    "image": "PMC4301563_f1-ol-09-02-0777_351873.jpg",
+    "text": " The granular cell tumor was interdigitated with adjacent thyroid follicles (staining, hematoxylin and eosin; magnification, ×200)",
+    "logit": 2.1648683547973633,
+    "overall_rank": 346538,
+    "stratified_rank": 11
+  },
+  {
+    "image": "PMC3574840_F5_186098.jpg",
+    "text": " Sagittal image of computed tomography on the same day showing more clearly the complete bony fusion",
+    "logit": 1.8226511478424072,
+    "overall_rank": 421153,
+    "stratified_rank": 12
+  },
+  {
+    "image": "PMC6439066_Fig1_458915.jpg",
+    "text": " Arterial phase (gastroduodenal artery)",
+    "logit": 1.8730790615081787,
+    "overall_rank": 410183,
+    "stratified_rank": 13
+  },
+  {
+    "image": "PMC3037868_F1_86880.jpg",
+    "text": " diffusion-weighted image at the midbrain",
+    "logit": 2.0244741439819336,
+    "overall_rank": 377075,
+    "stratified_rank": 14
+  },
+  {
+    "image": "PMC6594755_fig5s7_320.jpg",
+    "text": "LPL is present in the hippocampal neurons of wild-type mice, as revealed by confocal immunofluorescence microscopy.Sections (10-μm) of brain specimens from wild-type and Lpl–/–MCK-hLPL mice were fixed with 3% PFA and stained with antibodies against LPL (red) and CD31 (green). The left panel shows a tiled low-magnification image recorded with a 20× objective; the right panel shows a single image recorded with a 20× objective. DNA was stained with DAPI (blue). LPL was detected in the hippocampus (note the high density of neurons). LPL was absent from the hippocampus of Lpl–/–MCK-hLPL mice. No LPL was detectable when primary antibodies were omitted. Staining of all tissue sections was performed simultaneously, and images at the same magnification were recorded with the same microscope settings. Two mice per genotype were evaluated; representative images are shown. Scale bar, 50 μm.",
+    "logit": 1.685265302658081,
+    "overall_rank": 451535,
+    "stratified_rank": 15
+  },
+  {
+    "image": "PMC4643116_Fig6_443568.jpg",
+    "text": "Panoramic radiography shows the fracture of the left mandibular coronoid process",
+    "logit": 1.3168578147888184,
+    "overall_rank": 533654,
+    "stratified_rank": 16
+  },
+  {
+    "image": "PMC1892559_F4_11663.jpg",
+    "text": "Immunolocalization of Hic-5 protein in the longitudinal smooth muscle layer of rat myometrium at d15, d17, d19, d21, d22, d23 of gestation and post-partum (PP). On d15 Hic-5 was detectable as distinct, well separated punctate foci at plasma membranes (arrowheads) while at subsequent timepoints, and particularly in PP samples, Hic-5 became consistently detected as an almost continuous line of intense fluorescence at cell membranes (arrows). Control = mouse IgG. Scale bar = 50 μm.",
+    "logit": 1.408165454864502,
+    "overall_rank": 513266,
+    "stratified_rank": 17
+  },
+  {
+    "image": "PMC8097510_fcab036-F2_433771.jpg",
+    "text": " Fluid-attenuated inversion recovery (FLAIR) images of patient II.2 at age 38 years revealing frontally pronounced residual WM lesion.",
+    "logit": 1.097909688949585,
+    "overall_rank": 583178,
+    "stratified_rank": 18
+  },
+  {
+    "image": "PMC2248172_F5_17853.jpg",
+    "text": " CXCR4 staining of non-induced Jurakt cells",
+    "logit": 1.5869805812835693,
+    "overall_rank": 473191,
+    "stratified_rank": 19
+  },
+  {
+    "image": "PMC9027802_nanomaterials-12-01370-f005_260387.jpg",
+    "text": "Fluorescent images of 4T1 cells stained with Live/Dead Double Stain Kit under different treatment groups such as PBS, laser, HNPs, and HNPs + laser. Green fluorescence indicates live cells which were stained by calcein-AM dye, red fluorescence indicates dead cells which were stained by propidium iodide (PI), and merge is the combined effect of live/dead cells. The scale bar is 100 μm.",
+    "logit": 1.2650716304779053,
+    "overall_rank": 545292,
+    "stratified_rank": 20
+  },
+  {
+    "image": "PMC8967578_fig2_240261.jpg",
+    "text": "Delineation details of the ROI of enhanced and unenhanced tumours.",
+    "logit": 0.7019003033638,
+    "overall_rank": 673988,
+    "stratified_rank": 21
+  },
+  {
+    "image": "PMC3950291_pone-0091868-g002_273379.jpg",
+    "text": " Cells were untreated or treated with 0.5% 1-ButOH or 5 µg/mL BFA for the indicated times and the Golgi apparatus immunostained for GM-130. With treatment with 1-ButOH, the Golgi apparatus becomes disorganized and the saccules are dilated, while the treatment with BFA resulted in a vesiculation and spreading of the Golgi apparatus. Images are Z-series projections. Bar, 16 µm.",
+    "logit": 0.8392712473869324,
+    "overall_rank": 642082,
+    "stratified_rank": 22
+  },
+  {
+    "image": "PMC8582397_cancers-13-05316-f001_108321.jpg",
+    "text": " T2 weighted MRI sequence with contrast showing a total of 12 lesions. Images from left to right correspond, respectively, from cranial to caudal localization;",
+    "logit": 0.8672493696212769,
+    "overall_rank": 635634,
+    "stratified_rank": 23
+  },
+  {
+    "image": "PMC8871484_diagnostics-12-00387-f002_203997.jpg",
+    "text": " Prior mammogram (b)",
+    "logit": 0.8718128204345703,
+    "overall_rank": 634581,
+    "stratified_rank": 24
+  },
+  {
+    "image": "PMC5116133_Fig1_97071.jpg",
+    "text": " CXR shows elevated right hemi-diaphragm with right lower lobe infiltration and pleural effusion",
+    "logit": 0.7335442900657654,
+    "overall_rank": 666489,
+    "stratified_rank": 25
+  },
+  {
+    "image": "PMC8950144_polymers-14-01192-f005_232610.jpg",
+    "text": " SEM images with magnification of 200 of 1 wt % xGnP incorporated by Method 2",
+    "logit": 0.1599949300289154,
+    "overall_rank": 799418,
+    "stratified_rank": 26
+  },
+  {
+    "image": "PMC6331582_Fig3_422326.jpg",
+    "text": " H&E image of adjacent section",
+    "logit": -0.1341666877269745,
+    "overall_rank": 867143,
+    "stratified_rank": 27
+  },
+  {
+    "image": "PMC8864825_Fig1_200300.jpg",
+    "text": " MRI with three timings (Pre, Mid, Post) and two boost plans",
+    "logit": -0.3603415787220001,
+    "overall_rank": 918681,
+    "stratified_rank": 28
+  },
+  {
+    "image": "PMC7829878_materials-14-00381-f004_351329.jpg",
+    "text": " SEM images of d-hMSCs cultured with basic MSC culture medium (MSC) and osteogenic differentiation medium (osteo) on machined and SLA-treated titanium surfaces at 5 days after initial culturing at middle 100× magnification; red arrows indicate mineralized crystalline-like structure",
+    "logit": -0.23552924394607544,
+    "overall_rank": 890342,
+    "stratified_rank": 29
+  },
+  {
+    "image": "PMC9032304_pathogens-11-00435-f002_263078.jpg",
+    "text": " PTAH stains in dark blue the fibrin component of the same thrombus (4× objective).",
+    "logit": -0.2061029076576233,
+    "overall_rank": 883664,
+    "stratified_rank": 30
+  },
+  {
+    "image": "PMC8443378_fig3_59905.jpg",
+    "text": " Diffusion imagin",
+    "logit": -0.49865996837615967,
+    "overall_rank": 949768,
+    "stratified_rank": 31
+  },
+  {
+    "image": "PMC7383304_fig3_220481.jpg",
+    "text": " Arthroscopic findings and three-dimensional computed tomography. (Repaired LM",
+    "logit": -0.5790073871612549,
+    "overall_rank": 967737,
+    "stratified_rank": 32
+  },
+  {
+    "image": "PMC5884883_F2_297492.jpg",
+    "text": " Functional MRI showed affection of motor and sensory functions",
+    "logit": -1.0741734504699707,
+    "overall_rank": 1075529,
+    "stratified_rank": 33
+  },
+  {
+    "image": "PMC7908728_Fig2_374746.jpg",
+    "text": " After neoadjuvant chemotherapy, the tumor volume shrank considerably than before.",
+    "logit": -1.1273894309997559,
+    "overall_rank": 1086666,
+    "stratified_rank": 34
+  },
+  {
+    "image": "PMC5294716_f0005_123680.jpg",
+    "text": " Linked Color imaging (LCI; fundic gland cyst of the stomach",
+    "logit": -0.44539982080459595,
+    "overall_rank": 937696,
+    "stratified_rank": 35
+  },
+  {
+    "image": "PMC6982190_ijerph-17-00030-f002_106210.jpg",
+    "text": " A sample of healthy digital fundus photographs",
+    "logit": -1.8246095180511475,
+    "overall_rank": 1227168,
+    "stratified_rank": 36
+  },
+  {
+    "image": "PMC3729368_F4_221668.jpg",
+    "text": "Direct detection of bacterial taxa in PMP tumor tissue by ISH. Hybridizations were carried out as described in the Materials and Methods. Using DNA probes complementary to taxon-specific rRNA sequences, we detected the presence of bacteria in additional patients not included in our sequencing study (patients 196 and 244 shown). Images were selected to show positive hybridization signal with a subset of probes used and are not intended to reflect relative abundance within tissue specimens. FIR, Firmicutes; ACT, Actinobacteria; BET, Betaproteobacteria; VER, Verrucomicrobiales.",
+    "logit": -1.1777210235595703,
+    "overall_rank": 1097154,
+    "stratified_rank": 37
+  },
+  {
+    "image": "PMC4906411_f4_41009.jpg",
+    "text": " Quantification of the number of cells with perinuclear accumulation of LC3-positive structures from h. Quantified >100 cells per experiment. Bars indicate mean+s.d. from independent triplicate experiments. Student's t-test statistical analysis. *P<0.05, **P<0.01, ***P<0.001. ev, empty vector control",
+    "logit": -1.7977681159973145,
+    "overall_rank": 1221936,
+    "stratified_rank": 38
+  },
+  {
+    "image": "PMC6407204_Fig5_447212.jpg",
+    "text": "Subventricular zone neural progenitor mobilization is increased by oral administration of VCE-003.2. Mice were analyzed 4 weeks after lesion induced by AAV-htt16Q and AAV-htt94Q bilateral injection and daily treatment with vehicle or VCE-003.2 (10 mg/kg). Confocal microscopy characterization of the SVZ was performed with GFAP, htt and Ki-67-specific antibodies in the indicated experimental groups. Proliferating SVZ-neural stem cells were quantified based on GFAP and Ki-67 immunofluorescence colocalization. AAV-htt16Q (Veh and VCE-003.2, n = 7 and 6, respectively) and AAV-htt94Q (Veh and VCE-003.2, n = 7 and 8, respectively). Statistics: One-way ANOVA. F = 5.78; R2 = 0.42. ##p < 0.01; q = 5.29 AAV-htt94Q VCE-003.2 vs. AAV-htt94Q Veh. Scale bar, 100 μm",
+    "logit": -1.5117766857147217,
+    "overall_rank": 1165684,
+    "stratified_rank": 39
+  },
+  {
+    "image": "PMC7961091_fig3_392025.jpg",
+    "text": " Phase-contrast imag",
+    "logit": -1.2021574974060059,
+    "overall_rank": 1102283,
+    "stratified_rank": 40
+  },
+  {
+    "image": "PMC8320941_jimaging-05-00042-f008_22648.jpg",
+    "text": " Colored arrows indicate a possible cover scale (red), ground scale (blue) and hair (black), respectively",
+    "logit": -2.040548086166382,
+    "overall_rank": 1267831,
+    "stratified_rank": 41
+  },
+  {
+    "image": "PMC4023930_pone-0097165-g007_289465.jpg",
+    "text": " Quantitative analysis for type I collagen positive areas in the glomeruli. Areas immunostained by anti-type I collagen and anti-podoplanin in ten different glomeruli of laser-scanning microscopic images were measured by ImageJ. The relative volume of type I collagen accumulation in the glomeruli was expressed by a mean ratio: area of type I collagen in a glomerulus/area of a glomerulus within podoplanin-positive podocytes. There were statistically significant differences in the relative accumulations of type I collagen in the glomeruli of non-diabetic ICR mice (ICR) and STZ-induced type I diabetic ICR mice (STZ), and between the diabetic mice and the diabetic mice with LPS (STZ+LPS). Data are expressed as means+SD. *Significantly different (p<0.01)",
+    "logit": -2.558636426925659,
+    "overall_rank": 1360526,
+    "stratified_rank": 42
+  },
+  {
+    "image": "PMC5651497_f0055_230215.jpg",
+    "text": " The expression pattern of E-cadherin in the original HNSCC cells cultured in a conventional 2D manner. The lower panel is the magnification of the upper panel",
+    "logit": -2.6312408447265625,
+    "overall_rank": 1372710,
+    "stratified_rank": 43
+  },
+  {
+    "image": "PMC3905033_pone-0087530-g004_262221.jpg",
+    "text": " Fundus photographs and fluorescein angiogram were taken from the Ikk2+/flox/Nestine-Cre+ (Ikk2+/−",
+    "logit": -2.4359965324401855,
+    "overall_rank": 1339078,
+    "stratified_rank": 44
+  },
+  {
+    "image": "PMC3117860_pone-0021129-g005_99431.jpg",
+    "text": " Triple negative tumor scored as 4B (d",
+    "logit": -2.2390527725219727,
+    "overall_rank": 1304350,
+    "stratified_rank": 45
+  },
+  {
+    "image": "PMC7482810_F8_251700.jpg",
+    "text": " Statistical analysis of quantitative of CD3+, CD8+, CD4+ TILs from intact tumors that T cell+BiTE+SOR, T cell+BiTE and T cell treated. *P < 0.05, ***P < 0.001",
+    "logit": -2.863706350326538,
+    "overall_rank": 1411252,
+    "stratified_rank": 46
+  },
+  {
+    "image": "PMC2940844_pone-0012770-g001_73839.jpg",
+    "text": " Healthy old lemur (Nbr 43",
+    "logit": -3.6060686111450195,
+    "overall_rank": 1519735,
+    "stratified_rank": 47
+  },
+  {
+    "image": "PMC8783510_Fig8_174515.jpg",
+    "text": " Inconsistencies in the way chalkiness is manually annotated, due to the white gradient nature of chalkiness",
+    "logit": -3.1955652236938477,
+    "overall_rank": 1463165,
+    "stratified_rank": 48
+  },
+  {
+    "image": "PMC6517800_F1_479732.jpg",
+    "text": " and one with polymyositi",
+    "logit": -3.643629550933838,
+    "overall_rank": 1524196,
+    "stratified_rank": 49
+  },
+  {
+    "image": "PMC7685163_jame21211-fig-0008_304010.jpg",
+    "text": " SPE generation (Gs) in observations (c) and CESM-H (d)",
+    "logit": -2.899840831756592,
+    "overall_rank": 1417251,
+    "stratified_rank": 50
+  }
+]

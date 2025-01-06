@@ -1,0 +1,1 @@
+ Inconsistencies in the way chalkiness is manually annotated, due to the white gradient nature of chalkiness
