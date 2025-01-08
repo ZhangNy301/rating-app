@@ -6,6 +6,7 @@ from datetime import datetime
 import random
 import requests
 from dotenv import load_dotenv
+from urllib.parse import quote
 
 # 加载环境变量（可选）
 try:
@@ -13,7 +14,32 @@ try:
 except:
     pass
 
+# 数据库初始化
+def init_db():
+    conn = sqlite3.connect('ratings.db')
+    c = conn.cursor()
+    
+    # 先删除旧表（如果存在）
+    c.execute('DROP TABLE IF EXISTS ratings')
+    
+    # 创建新表
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS ratings
+        (id INTEGER PRIMARY KEY AUTOINCREMENT,
+         image_id TEXT,
+         rater_id TEXT,
+         image_quality INTEGER,
+         text_quality INTEGER,
+         consistency INTEGER,
+         timestamp DATETIME)
+    ''')
+    conn.commit()
+    conn.close()
+
 app = Flask(__name__)
+
+# 初始化数据库
+init_db()
 
 # DeepSeek API配置
 DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY', 'sk-3614585a328445f3be6a2ae43083409b')
@@ -51,8 +77,8 @@ def load_samples():
                 print(f"Error reading text file {text_file}: {e}")
                 text_content = "无法加载文本内容"
         
-        # 修改图片URL的生成方式，确保使用正确的路径分隔符
-        image_url = f'/static/images/{image_file}'.replace('\\', '/')
+        # 修改图片URL的生成方式，使用URL编码处理文件名
+        image_url = f'/static/images/{quote(image_file)}'
         
         samples.append({
             'id': image_id,  # 使用完整的文件名作为ID
@@ -61,28 +87,6 @@ def load_samples():
         })
     
     return samples
-
-# 数据库初始化
-def init_db():
-    conn = sqlite3.connect('ratings.db')
-    c = conn.cursor()
-    
-    # 先删除旧表（如果存在）
-    c.execute('DROP TABLE IF EXISTS ratings')
-    
-    # 创建新表
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS ratings
-        (id INTEGER PRIMARY KEY AUTOINCREMENT,
-         image_id TEXT,
-         rater_id TEXT,
-         image_quality INTEGER,
-         text_quality INTEGER,
-         consistency INTEGER,
-         timestamp DATETIME)
-    ''')
-    conn.commit()
-    conn.close()
 
 @app.route('/')
 def index():
@@ -192,75 +196,87 @@ def clean_ratings(rater_id):
 
 @app.route('/export_results/<rater_id>')
 def export_results(rater_id):
-    conn = sqlite3.connect('ratings.db')
-    c = conn.cursor()
-    
-    # 获取所有样本
-    samples = load_samples()
-    
-    # 获取该评分者的所有评分
-    c.execute('''
-        SELECT image_id, image_quality, text_quality, consistency
-        FROM ratings
-        WHERE rater_id = ?
-    ''', (rater_id,))
-    
-    ratings_data = c.fetchall()
-    conn.close()
-
-    # 创建评分字典，方便查找
-    ratings_dict = {}
-    for row in ratings_data:
-        image_id = row[0]
-        # 处理可能存在的完整路径
-        if '/' in image_id:
-            image_id = image_id.split('/')[-1]
-        if '.jpg' in image_id:
-            image_id = image_id.replace('.jpg', '')
-        ratings_dict[image_id] = row[1:]
-
-    # 计算每个样本的总分
-    results = []
-    for sample in samples:
-        image_id = sample['id']
-        # 获取评分数据，如果没有评分则使用默认值0
-        rating = ratings_dict.get(image_id, (0, 0, 0))
+    try:
+        # 确保导出目录存在
+        export_dir = 'exports'
+        if not os.path.exists(export_dir):
+            os.makedirs(export_dir)
         
-        # 计算总分
-        total_score = sum(rating)
+        conn = sqlite3.connect('ratings.db')
+        c = conn.cursor()
         
-        results.append({
-            'image_id': image_id,
-            'image_path': sample['image_url'],
-            'text': sample['text'],
-            'image_quality': rating[0],
-            'text_quality': rating[1],
-            'consistency': rating[2],
-            'total_score': total_score
-        })
+        # 获取所有样本
+        samples = load_samples()
+        
+        # 获取该评分者的所有评分
+        c.execute('''
+            SELECT image_id, image_quality, text_quality, consistency
+            FROM ratings
+            WHERE rater_id = ?
+        ''', (rater_id,))
+        
+        ratings_data = c.fetchall()
+        conn.close()
 
-    # 根据总分排序
-    results.sort(key=lambda x: x['total_score'], reverse=True)
-    
-    # 添加排名信息
-    total_samples = len(results)
-    for i, result in enumerate(results):
-        result['rank'] = i + 1  # 最高分排名为1
+        if not ratings_data:
+            return jsonify({"error": "没有找到评分数据"}), 404
 
-    # 创建最终的导出数据
-    export_data = {
-        'rater_id': rater_id,
-        'evaluation_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-        'total_samples': total_samples,
-        'results': results
-    }
-    
-    # 将结果保存为JSON文件
-    filename = f'ratings_{rater_id}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json'
-    with open(filename, 'w', encoding='utf-8') as f:
-        json.dump(export_data, f, indent=2, ensure_ascii=False)
-    
-    return send_file(filename, as_attachment=True)
+        # 创建评分字典，方便查找
+        ratings_dict = {}
+        for row in ratings_data:
+            image_id = row[0]
+            # 处理可能存在的完整路径
+            if '/' in image_id:
+                image_id = image_id.split('/')[-1]
+            if '.jpg' in image_id:
+                image_id = image_id.replace('.jpg', '')
+            ratings_dict[image_id] = row[1:]
+
+        # 计算每个样本的总分
+        results = []
+        for sample in samples:
+            image_id = sample['id']
+            # 获取评分数据，如果没有评分则使用默认值0
+            rating = ratings_dict.get(image_id, (0, 0, 0))
+            
+            # 计算总分
+            total_score = sum(rating)
+            
+            results.append({
+                'image_id': image_id,
+                'image_path': sample['image_url'],
+                'text': sample['text'],
+                'image_quality': rating[0],
+                'text_quality': rating[1],
+                'consistency': rating[2],
+                'total_score': total_score
+            })
+
+        # 根据总分排序
+        results.sort(key=lambda x: x['total_score'], reverse=True)
+        
+        # 添加排名信息
+        total_samples = len(results)
+        for i, result in enumerate(results):
+            result['rank'] = i + 1  # 最高分排名为1
+
+        # 创建最终的导出数据
+        export_data = {
+            'rater_id': rater_id,
+            'evaluation_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'total_samples': total_samples,
+            'results': results
+        }
+        
+        # 将结果保存为JSON文件
+        filename = f'exports/ratings_{rater_id}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json'
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(export_data, f, indent=2, ensure_ascii=False)
+        
+        return send_file(filename, as_attachment=True)
+    except Exception as e:
+        print(f"Error exporting results: {e}")
+        return jsonify({"error": f"导出评分结果时发生错误: {str(e)}"}), 500
 
 @app.route('/query_ai', methods=['POST'])
 def query_ai():
@@ -359,5 +375,4 @@ def query_ai():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    init_db()
     app.run(debug=True) 
