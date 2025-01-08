@@ -172,12 +172,12 @@
             box-sizing: border-box;
         }
         .yes-no-button.yes {
-            background-color: #4CAF50;
+            background-color: #dc3545;
             color: white;
             opacity: 0.8;
         }
         .yes-no-button.no {
-            background-color: #dc3545;
+            background-color: #4CAF50;
             color: white;
             opacity: 0.8;
         }
@@ -565,14 +565,69 @@
         .page-transition-in {
             animation: pageIn 0.5s ease-in-out forwards;
         }
+
+        /* 感谢弹窗样式 */
+        .thank-you-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        .thank-you-modal h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .thank-you-modal p {
+            margin-bottom: 25px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .modal-close {
+            padding: 10px 25px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .modal-close:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
+    <!-- 添加感谢弹窗 -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="thank-you-modal" id="thankYouModal">
+        <h2>感谢您的参与！</h2>
+        <button class="modal-close" onclick="closeThankYouModal()">确定</button>
+    </div>
     <div class="container">
         <div class="guide-panel">
             <div class="guide-section">
                 <h3>欢迎使用评分系统</h3>
-                <p>这是一个用于评估图文对质量的评分系统。请仔细阅读以下指南，以帮助您更好地完成评分任务。</p>
+                <p>这是一个用于评估图文对质量的评分系统。我们采用"找错误"的方式进行评分，请仔细阅读以下指南。</p>
             </div>
             
             <div class="guide-section">
@@ -587,20 +642,33 @@
             <div class="guide-section">
                 <h3>如何评分</h3>
                 <ul>
-                    <li>观察中间区域显示的图像和对应文本</li>
-                    <li>仔细阅读每个评分问题</li>
-                    <li>根据问题选择"是"或"否"进行回答</li>
-                    <li>所有问题回答完毕后，系统会自动计算星级评分</li>
+                    <li>每个图文对的初始状态为满分（9分）</li>
+                    <li>评分采用"找错误"的方式进行</li>
+                    <li>仔细阅读每个问题，寻找可能存在的问题</li>
+                    <li>如果发现问题存在，选择"是"（将扣除一分）</li>
+                    <li>如果问题不存在，选择"否"（不扣分）</li>
+                    <li>所有问题回答完毕后，系统会自动计算最终得分</li>
                 </ul>
             </div>
 
             <div class="guide-section">
                 <h3>星级说明</h3>
-                <p>页面底部的星星数量代表当前图文对的各维度评分：</p>
+                <p>页面底部显示三个维度的星级状态：</p>
                 <ul>
-                    <li>⭐：基本合格</li>
-                    <li>⭐⭐：质量良好</li>
-                    <li>⭐⭐⭐：质量优秀</li>
+                    <li>⭐⭐⭐ <strong>初始状态</strong>：金色星星表示满分</li>
+                    <li>当发现问题（回答"是"）时：</li>
+                    <li>⭐⭐☆ 扣除一颗星星（变为深灰色）</li>
+                    <li>每个维度最多扣除三颗星星</li>
+                    <li>最终得分 = 剩余的金色星星数量</li>
+                </ul>
+            </div>
+
+            <div class="guide-section">
+                <h3>评分维度说明</h3>
+                <ul>
+                    <li><strong>图像质量</strong>：检查清晰度、亮度和完整性问题</li>
+                    <li><strong>文本质量</strong>：检查语言表达、完整性和错别字问题</li>
+                    <li><strong>图文一致性</strong>：检查描述准确性、细节完整性和信息相关性问题</li>
                 </ul>
             </div>
 
@@ -719,19 +787,19 @@
         // 评分问题配置
         const questions = {
             imageQuality: [
-                "图像的技术质量是否合格？（清晰度、亮度、对比度适中，无明显噪点或伪影）",
-                "拍摄的范围是否完整？（重要区域未被裁切，覆盖了需要展示的全部内容）",
-                "是否无观察障碍？（无遮挡、反光等影响判别的干扰因素）"
+                "图像是否存在模糊或分辨率不足？（看不清细节）",
+                "图像亮度对比度是否异常？（过亮、过暗或对比度不当）",
+                "图像是否存在遮挡或裁剪？（有遮挡物或边缘裁切）"
             ],
             textQuality: [
-                "语言表达是否规范？（语法正确，表述清晰，结构合理）",
-                "描述内容是否完整？（包含关键观察发现，无重要信息遗漏）",
-                "专业性是否到位？（不滥用俚语，结论明确，符合专业规范）"
+                "文字描述是否存在语句不通顺？（表达混乱或难以理解）",
+                "文字内容是否存在缺失？（描述不完整或有断句）",
+                "文字是否存在错别字？（包含错字或乱码）"
             ],
             consistency: [
-                "描述的内容是否与图像特征一一对应？（文字描述的内容在图中可找到，图像重要特征在文中有描述）",
-                "描述的空间关系是否准确？（方位、位置、比例等空间信息描述准确）",
-                "结论是否有充分的图像支持？（得出的结论或诊断与图像表现相符）"
+                "文字描述是否包含图中找不到的内容？（描述与图像不对应）",
+                "文字描述是否遗漏重要细节？（重要特征未描述）",
+                "文字描述是否包含冗余信息？（有无关或多余内容）"
             ]
         };
 
@@ -809,13 +877,6 @@
                         }
                     });
                 }
-            }
-
-            // 在最后一个问题回答后显示总结
-            if (currentQuestionIndex === totalQuestions - 1) {
-                setTimeout(() => {
-                    showRatingSummary();
-                }, 500);
             }
         }
 
@@ -955,8 +1016,8 @@
                 if (currentQuestionIndex < totalQuestions - 1) {
                     currentQuestionIndex++;
                     updateCurrentQuestion();
-                } else {
-                    // 在最后一个问题时，显示评分总结并延迟进入下一个样本
+                } else if (currentQuestionIndex === totalQuestions - 1) {
+                    // 在第9个问题（最后一个问题）完成时，显示评分总结并延迟进入下一个样本
                     showRatingSummary();
                     
                     // 禁用所有按钮，防止在切换过程中继续点击
@@ -989,7 +1050,7 @@
                                     mainContent.classList.remove('page-transition-in');
                                 }, 500);
                             }, 500);
-                        }, 2000); // 等待2秒后切换到下一个样本
+                        }, 1500); // 修改为1.5秒后切换到下一个样本
                     } else {
                         // 显示完成按钮
                         document.getElementById('finish-btn').style.display = 'inline';
@@ -1154,17 +1215,17 @@
             
             if (!currentRating) {
                 currentRating = {
-                    image_answers: Array(5).fill(-1),
-                    text_answers: Array(5).fill(-1),
-                    consistency_answers: Array(5).fill(-1)
+                    image_answers: Array(3).fill(-1),
+                    text_answers: Array(3).fill(-1),
+                    consistency_answers: Array(3).fill(-1)
                 };
                 ratings[currentIndex] = currentRating;
             }
 
             // 确保答案数组存在
-            if (!currentRating.image_answers) currentRating.image_answers = Array(5).fill(-1);
-            if (!currentRating.text_answers) currentRating.text_answers = Array(5).fill(-1);
-            if (!currentRating.consistency_answers) currentRating.consistency_answers = Array(5).fill(-1);
+            if (!currentRating.image_answers) currentRating.image_answers = Array(3).fill(-1);
+            if (!currentRating.text_answers) currentRating.text_answers = Array(3).fill(-1);
+            if (!currentRating.consistency_answers) currentRating.text_answers = Array(3).fill(-1);
 
             // 获取对应类别的答案数组
             let answers;
@@ -1186,28 +1247,30 @@
             // 更新星星显示
             stars.forEach((star, index) => {
                 star.classList.remove('active', 'inactive');
+                // 默认所有星星都是金色（active）
+                star.classList.add('active');
+                
                 if (answers[index] !== -1) {  // 只处理已回答的问题
                     if (answers[index] === 1) {
-                        star.classList.add('active');  // 金色，表示"是"
-                    } else {
-                        star.classList.add('inactive');  // 深灰色，表示"否"
+                        star.classList.remove('active');  // 移除金色
+                        star.classList.add('inactive');   // 添加深灰色，表示发现了问题
                     }
                 }
             });
 
-            // 更新总分
+            // 更新总分（现在是从3分开始，每个"是"答案减1分）
             switch(category) {
                 case 'image':
                     currentRating.image_answers = answers;
-                    currentRating.image_quality = answers.filter(v => v === 1).length;
+                    currentRating.image_quality = 3 - answers.filter(v => v === 1).length;
                     break;
                 case 'text':
                     currentRating.text_answers = answers;
-                    currentRating.text_quality = answers.filter(v => v === 1).length;
+                    currentRating.text_quality = 3 - answers.filter(v => v === 1).length;
                     break;
                 case 'consistency':
                     currentRating.consistency_answers = answers;
-                    currentRating.consistency = answers.filter(v => v === 1).length;
+                    currentRating.consistency = 3 - answers.filter(v => v === 1).length;
                     break;
             }
 
@@ -1224,7 +1287,8 @@
 
                 const stars = starsContainer.querySelectorAll('.star');
                 stars.forEach(star => {
-                    star.classList.remove('active', 'inactive');
+                    star.classList.remove('inactive');
+                    star.classList.add('active');  // 重置时所有星星都是金色（满分状态）
                 });
             });
         }
@@ -1513,6 +1577,58 @@
             setTimeout(() => {
                 summary.classList.add('show', 'stamp');
             }, 100);
+        }
+
+        // 显示感谢弹窗
+        function showThankYouModal() {
+            document.getElementById('modalOverlay').style.display = 'block';
+            document.getElementById('thankYouModal').style.display = 'block';
+        }
+
+        // 关闭感谢弹窗
+        function closeThankYouModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+            document.getElementById('thankYouModal').style.display = 'none';
+        }
+
+        // 修改完成评分的处理函数
+        async function finishRating() {
+            const raterId = localStorage.getItem('raterId');
+            if (!raterId) {
+                alert('无法获取评分者ID');
+                return;
+            }
+
+            try {
+                // 移除总分印章
+                const existingSummary = document.querySelector('.rating-summary');
+                if (existingSummary) {
+                    existingSummary.remove();
+                }
+
+                // 清理评分数据
+                await fetch(`/clean_ratings/${raterId}`);
+                
+                // 导出评分结果
+                const response = await fetch(`/export_results/${raterId}`);
+                const blob = await response.blob();
+                
+                // 创建下载链接
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `rating_results_${raterId}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+
+                // 显示感谢弹窗
+                showThankYouModal();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('导出评分结果时发生错误');
+            }
         }
     </script>
 </body>
