@@ -22,15 +22,15 @@ def init_db():
     # 先删除旧表（如果存在）
     c.execute('DROP TABLE IF EXISTS ratings')
     
-    # 创建新表
+    # 创建新表，评分范围改为1-7
     c.execute('''
         CREATE TABLE IF NOT EXISTS ratings
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
          image_id TEXT,
          rater_id TEXT,
-         image_quality INTEGER,
-         text_quality INTEGER,
-         consistency INTEGER,
+         image_quality INTEGER CHECK(image_quality BETWEEN 1 AND 7),
+         text_quality INTEGER CHECK(text_quality BETWEEN 1 AND 7),
+         consistency INTEGER CHECK(consistency BETWEEN 1 AND 7),
          timestamp DATETIME)
     ''')
     conn.commit()
@@ -50,7 +50,43 @@ def load_samples():
     samples = []
     static_dir = os.path.join(os.path.dirname(__file__), 'static')
     
-    # 遍历images目录获取所有图片
+    # 首先尝试从selected_pairs.json加载
+    selected_pairs_path = os.path.join(static_dir, 'selected_pairs.json')
+    if os.path.exists(selected_pairs_path):
+        try:
+            with open(selected_pairs_path, 'r', encoding='utf-8') as f:
+                loaded_samples = json.load(f)
+                # 转换数据格式
+                converted_samples = []
+                for sample in loaded_samples:
+                    # 从image字段获取文件名
+                    image_filename = sample.get('image', '')
+                    if image_filename:
+                        # 检查图片文件是否存在
+                        image_path = os.path.join(static_dir, 'images', image_filename)
+                        if os.path.exists(image_path):
+                            # 构建正确的图片URL
+                            image_url = f'/static/images/{quote(image_filename)}'
+                            # 构建新的样本格式
+                            converted_sample = {
+                                'id': os.path.splitext(image_filename)[0],  # 移除扩展名
+                                'image_url': image_url,
+                                'text': sample.get('text', '')
+                            }
+                            converted_samples.append(converted_sample)
+                        else:
+                            print(f"Warning: Image file not found: {image_path}")
+                
+                if not converted_samples:
+                    print("Warning: No valid samples found in selected_pairs.json")
+                return converted_samples
+        except Exception as e:
+            print(f"Error loading selected_pairs.json: {e}")
+            print(f"Error details: {str(e)}")
+            import traceback
+            traceback.print_exc()
+    
+    # 如果selected_pairs.json不存在或加载失败，则扫描目录
     images_dir = os.path.join(static_dir, 'images')
     texts_dir = os.path.join(static_dir, 'texts')
     
@@ -81,7 +117,7 @@ def load_samples():
         image_url = f'/static/images/{quote(image_file)}'
         
         samples.append({
-            'id': image_id,  # 使用完整的文件名作为ID
+            'id': image_id,
             'image_url': image_url,
             'text': text_content
         })
@@ -123,6 +159,14 @@ def submit_rating():
     existing_rating = c.fetchone()
     
     try:
+        # 验证评分范围
+        image_quality = int(data['image_quality'])
+        text_quality = int(data['text_quality'])
+        consistency = int(data['consistency'])
+        
+        if not (1 <= image_quality <= 7 and 1 <= text_quality <= 7 and 1 <= consistency <= 7):
+            raise ValueError("评分必须在1-7分之间")
+            
         if existing_rating:
             # 更新现有评分
             c.execute('''
@@ -130,9 +174,9 @@ def submit_rating():
                 SET image_quality = ?, text_quality = ?, consistency = ?, timestamp = CURRENT_TIMESTAMP
                 WHERE image_id = ? AND rater_id = ?
             ''', (
-                data['image_quality'],
-                data['text_quality'],
-                data['consistency'],
+                image_quality,
+                text_quality,
+                consistency,
                 image_id,
                 data['rater_id']
             ))
@@ -144,14 +188,18 @@ def submit_rating():
             ''', (
                 image_id,
                 data['rater_id'],
-                data['image_quality'],
-                data['text_quality'],
-                data['consistency']
+                image_quality,
+                text_quality,
+                consistency
             ))
         
         conn.commit()
         conn.close()
         return jsonify({'status': 'success'})
+    except ValueError as e:
+        conn.rollback()
+        conn.close()
+        return jsonify({'status': 'error', 'message': str(e)}), 400
     except Exception as e:
         conn.rollback()
         conn.close()
@@ -232,15 +280,12 @@ def export_results(rater_id):
                 image_id = image_id.replace('.jpg', '')
             ratings_dict[image_id] = row[1:]
 
-        # 计算每个样本的总分
+        # 计算每个样本的评分
         results = []
         for sample in samples:
             image_id = sample['id']
             # 获取评分数据，如果没有评分则使用默认值0
             rating = ratings_dict.get(image_id, (0, 0, 0))
-            
-            # 计算总分
-            total_score = sum(rating)
             
             results.append({
                 'image_id': image_id,
@@ -249,34 +294,31 @@ def export_results(rater_id):
                 'image_quality': rating[0],
                 'text_quality': rating[1],
                 'consistency': rating[2],
-                'total_score': total_score
+                'total_score': sum(rating)  # 总分为三个维度的分数之和
             })
 
-        # 根据总分排序
-        results.sort(key=lambda x: x['total_score'], reverse=True)
-        
-        # 添加排名信息
-        total_samples = len(results)
-        for i, result in enumerate(results):
-            result['rank'] = i + 1  # 最高分排名为1
+        # 生成导出文件名
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f'rating_results_{rater_id}.json'
+        filepath = os.path.join(export_dir, filename)
 
-        # 创建最终的导出数据
-        export_data = {
-            'rater_id': rater_id,
-            'evaluation_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'total_samples': total_samples,
-            'results': results
-        }
-        
-        # 将结果保存为JSON文件
-        filename = f'exports/ratings_{rater_id}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json'
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(export_data, f, indent=2, ensure_ascii=False)
-        
-        return send_file(filename, as_attachment=True)
+        # 保存结果
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump({
+                'rater_id': rater_id,
+                'timestamp': timestamp,
+                'results': results,
+                'rating_system': {
+                    'max_score_per_dimension': 7,
+                    'dimensions': ['image_quality', 'text_quality', 'consistency'],
+                    'total_max_score': 21
+                }
+            }, f, ensure_ascii=False, indent=2)
+
+        return send_file(filepath, as_attachment=True)
     except Exception as e:
         print(f"Error exporting results: {e}")
-        return jsonify({"error": f"导出评分结果时发生错误: {str(e)}"}), 500
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/query_ai', methods=['POST'])
 def query_ai():

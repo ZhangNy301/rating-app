@@ -89,24 +89,28 @@
         .text-container {
             margin: 20px 0;
             padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: #f0f7f0;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             position: relative;
-            border-left: 4px solid #4CAF50;
+            border-left: 6px solid #4CAF50;
             width: 100%;
             box-sizing: border-box;
         }
         .sample-text {
-            font-size: 1.1em;
+            font-size: 1.3em;
             line-height: 1.8;
-            color: #2c3e50;
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 6px;
+            color: #1a1a1a;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
             margin-bottom: 20px;
             width: 100%;
             box-sizing: border-box;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 2px solid #4CAF50;
+            font-weight: 500;
+            letter-spacing: 0.3px;
         }
         .rating-form {
             width: 100%;
@@ -614,6 +618,161 @@
         .modal-close:hover {
             background-color: #45a049;
         }
+
+        /* 新增星级评分样式 */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 5px;
+            padding: 20px 0;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            cursor: pointer;
+            font-size: 30px;
+            color: #ddd;
+            transition: color 0.2s ease-in-out;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: #ffd700;
+        }
+        .rating-dimension {
+            position: relative;
+            margin: 25px 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .rating-dimension:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            border-color: #4CAF50;
+        }
+
+        .rating-dimension h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3em;
+        }
+
+        .tooltip-trigger {
+            color: #4CAF50;
+            cursor: help;
+            font-size: 1.1em;
+            transition: transform 0.3s ease;
+        }
+
+        .tooltip-trigger:hover {
+            transform: scale(1.2);
+        }
+
+        .rating-tooltip {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 1000;
+            border: 3px solid #4CAF50;
+        }
+
+        .rating-tooltip::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .rating-tooltip h4 {
+            color: #4CAF50;
+            margin: 0 0 20px 0;
+            font-size: 1.5em;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #4CAF50;
+            font-weight: bold;
+        }
+
+        .rating-tooltip ul {
+            margin: 0;
+            padding-left: 25px;
+            list-style: none;
+        }
+
+        .rating-tooltip li {
+            margin: 15px 0;
+            color: #333333;
+            font-size: 1.2em;
+            line-height: 1.6;
+            font-weight: 500;
+            padding-left: 30px;
+            position: relative;
+            background-color: #f8f9fa;
+            padding: 12px 15px 12px 35px;
+            border-radius: 6px;
+            border-left: 3px solid #4CAF50;
+        }
+
+        .rating-tooltip li::before {
+            content: '•';
+            position: absolute;
+            left: 12px;
+            color: #4CAF50;
+            font-size: 1.5em;
+            line-height: 1;
+        }
+
+        .rating-dimension:hover .rating-tooltip {
+            display: block;
+            animation: tooltipIn 0.3s ease forwards;
+        }
+
+        /* 添加动画效果 */
+        @keyframes tooltipIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        /* 确保tooltip在所有屏幕尺寸下都居中显示 */
+        @media (max-width: 1400px) {
+            .rating-tooltip {
+                left: 50%;
+                right: auto;
+                transform: translate(-50%, -50%);
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rating-tooltip {
+                width: 90%;
+                max-width: 400px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -626,127 +785,135 @@
     <div class="container">
         <div class="guide-panel">
             <div class="guide-section">
-                <h3>欢迎使用评分系统</h3>
-                <p>这是一个用于评估图文对质量的评分系统。我们采用"找错误"的方式进行评分，请仔细阅读以下指南。</p>
-            </div>
-            
-            <div class="guide-section">
-                <h3>界面布局</h3>
+                <h3>评分指南</h3>
+                <p>请根据以下维度对图文对进行评分：</p>
                 <ul>
-                    <li><strong>左侧</strong>：当前的使用指南</li>
-                    <li><strong>中间</strong>：核心评分区域，包含图像和文本对</li>
-                    <li><strong>右侧</strong>：AI助手，可以帮助解答您的疑问</li>
+                    <li>图像质量（7分）</li>
+                    <li>文本质量（7分）</li>
+                    <li>图文一致性（7分）</li>
                 </ul>
-            </div>
-
-            <div class="guide-section">
-                <h3>如何评分</h3>
+                <p>每个维度的评分标准如下：</p>
                 <ul>
-                    <li>每个图文对的初始状态为满分（9分）</li>
-                    <li>评分采用"找错误"的方式进行</li>
-                    <li>仔细阅读每个问题，寻找可能存在的问题</li>
-                    <li>如果发现问题存在，选择"是"（将扣除一分）</li>
-                    <li>如果问题不存在，选择"否"（不扣分）</li>
-                    <li>所有问题回答完毕后，系统会自动计算最终得分</li>
-                </ul>
-            </div>
-
-            <div class="guide-section">
-                <h3>星级说明</h3>
-                <p>页面底部显示三个维度的星级状态：</p>
-                <ul>
-                    <li>⭐⭐⭐ <strong>初始状态</strong>：金色星星表示满分</li>
-                    <li>当发现问题（回答"是"）时：</li>
-                    <li>⭐⭐☆ 扣除一颗星星（变为深灰色）</li>
-                    <li>每个维度最多扣除三颗星星</li>
-                    <li>最终得分 = 剩余的金色星星数量</li>
-                </ul>
-            </div>
-
-            <div class="guide-section">
-                <h3>评分维度说明</h3>
-                <ul>
-                    <li><strong>图像质量</strong>：检查清晰度、亮度和完整性问题</li>
-                    <li><strong>文本质量</strong>：检查语言表达、完整性和错别字问题</li>
-                    <li><strong>图文一致性</strong>：检查描述准确性、细节完整性和信息相关性问题</li>
-                </ul>
-            </div>
-
-            <div class="guide-section">
-                <h3>AI助手使用说明</h3>
-                <ul>
-                    <li>右侧的AI助手可以回答您的问题</li>
-                    <li>支持快速操作按钮，一键获取常见帮助</li>
-                    <li>可以输入自定义问题获取更详细的解答</li>
-                    <li>AI助手会根据上下文提供相关建议</li>
+                    <li>7分：完美，无可挑剔</li>
+                    <li>6分：非常好，仅有极小瑕疵</li>
+                    <li>5分：良好，有少许瑕疵</li>
+                    <li>4分：一般，瑕疵明显但可接受</li>
+                    <li>3分：较差，问题较多</li>
+                    <li>2分：差，问题严重</li>
+                    <li>1分：极差，完全不可用</li>
                 </ul>
             </div>
         </div>
-        <!-- 主要内容区域 -->
+
         <div class="main-content">
-            <div class="progress">
-                <h2>进度: <span id="current-index">1</span>/<span id="total-samples">0</span></h2>
-            </div>
-
             <div class="image-container">
-                <img id="sample-image" src="" alt="评分图片">
+                <img id="current-image" src="" alt="评分图片">
             </div>
-
             <div class="text-container">
-                <div class="sample-text" id="sample-text"></div>
+                <div class="sample-text" id="current-text"></div>
             </div>
-
-            <div class="rating-form">
-                <div class="rating-section">
-                    <div class="rating-navigation">
-                        <button class="nav-button" onclick="previousQuestion()" id="prev-question-btn">上一个问题</button>
-                        <span id="question-progress">问题 1/9</span>
+            
+            <div class="rating-section">
+                <div class="rating-dimension">
+                    <h3>图像质量评分 <i class="fas fa-question-circle tooltip-trigger"></i></h3>
+                    <div class="rating-tooltip">
+                        <h4>评分参考要点：</h4>
+                        <ul>
+                            <li>图像清晰度和分辨率</li>
+                            <li>图像构图和美感</li>
+                            <li>图像内容的完整性</li>
+                            <li>图像是否存在噪点、模糊等问题</li>
+                        </ul>
                     </div>
-                    <h2 id="current-category">图像质量评估</h2>
-                    <div id="current-question" class="rating-question">
-                        <!-- 当前问题将在这里显示 -->
+                    <div class="star-rating" id="image-quality-rating">
+                        <input type="radio" id="image-star7" name="image-quality" value="7">
+                        <label for="image-star7" class="fas fa-star"></label>
+                        <input type="radio" id="image-star6" name="image-quality" value="6">
+                        <label for="image-star6" class="fas fa-star"></label>
+                        <input type="radio" id="image-star5" name="image-quality" value="5">
+                        <label for="image-star5" class="fas fa-star"></label>
+                        <input type="radio" id="image-star4" name="image-quality" value="4">
+                        <label for="image-star4" class="fas fa-star"></label>
+                        <input type="radio" id="image-star3" name="image-quality" value="3">
+                        <label for="image-star3" class="fas fa-star"></label>
+                        <input type="radio" id="image-star2" name="image-quality" value="2">
+                        <label for="image-star2" class="fas fa-star"></label>
+                        <input type="radio" id="image-star1" name="image-quality" value="1">
+                        <label for="image-star1" class="fas fa-star"></label>
                     </div>
                 </div>
 
-                <!-- 添加星级评分显示区域 -->
-                <div class="rating-stars-container">
-                    <h2>当前评分状态</h2>
-                    <div class="rating-stars-row">
-                        <div class="rating-stars-label">图像质量</div>
-                        <div class="rating-stars" id="image-quality-stars">
-                            <i class="fas fa-star star" data-index="0"></i>
-                            <i class="fas fa-star star" data-index="1"></i>
-                            <i class="fas fa-star star" data-index="2"></i>
-                        </div>
+                <div class="rating-dimension">
+                    <h3>文本质量评分 <i class="fas fa-question-circle tooltip-trigger"></i></h3>
+                    <div class="rating-tooltip">
+                        <h4>评分参考要点：</h4>
+                        <ul>
+                            <li>文本的语法和表达是否准确</li>
+                            <li>文本内容是否完整、连贯</li>
+                            <li>专业术语使用是否恰当</li>
+                            <li>文本是否存在明显错误或歧义</li>
+                        </ul>
                     </div>
-                    <div class="rating-stars-row">
-                        <div class="rating-stars-label">文本质量</div>
-                        <div class="rating-stars" id="text-quality-stars">
-                            <i class="fas fa-star star" data-index="0"></i>
-                            <i class="fas fa-star star" data-index="1"></i>
-                            <i class="fas fa-star star" data-index="2"></i>
-                        </div>
+                    <div class="star-rating" id="text-quality-rating">
+                        <input type="radio" id="text-star7" name="text-quality" value="7">
+                        <label for="text-star7" class="fas fa-star"></label>
+                        <input type="radio" id="text-star6" name="text-quality" value="6">
+                        <label for="text-star6" class="fas fa-star"></label>
+                        <input type="radio" id="text-star5" name="text-quality" value="5">
+                        <label for="text-star5" class="fas fa-star"></label>
+                        <input type="radio" id="text-star4" name="text-quality" value="4">
+                        <label for="text-star4" class="fas fa-star"></label>
+                        <input type="radio" id="text-star3" name="text-quality" value="3">
+                        <label for="text-star3" class="fas fa-star"></label>
+                        <input type="radio" id="text-star2" name="text-quality" value="2">
+                        <label for="text-star2" class="fas fa-star"></label>
+                        <input type="radio" id="text-star1" name="text-quality" value="1">
+                        <label for="text-star1" class="fas fa-star"></label>
                     </div>
-                    <div class="rating-stars-row">
-                        <div class="rating-stars-label">图文一致性</div>
-                        <div class="rating-stars" id="consistency-quality-stars">
-                            <i class="fas fa-star star" data-index="0"></i>
-                            <i class="fas fa-star star" data-index="1"></i>
-                            <i class="fas fa-star star" data-index="2"></i>
-                        </div>
+                </div>
+
+                <div class="rating-dimension">
+                    <h3>图文一致性评分 <i class="fas fa-question-circle tooltip-trigger"></i></h3>
+                    <div class="rating-tooltip">
+                        <h4>评分参考要点：</h4>
+                        <ul>
+                            <li>图像与文本描述的内容是否匹配</li>
+                            <li>文本是否准确描述了图像中的关键信息</li>
+                            <li>图文之间是否存在明显的矛盾</li>
+                            <li>图文的细节描述是否一致</li>
+                        </ul>
+                    </div>
+                    <div class="star-rating" id="consistency-rating">
+                        <input type="radio" id="consistency-star7" name="consistency" value="7">
+                        <label for="consistency-star7" class="fas fa-star"></label>
+                        <input type="radio" id="consistency-star6" name="consistency" value="6">
+                        <label for="consistency-star6" class="fas fa-star"></label>
+                        <input type="radio" id="consistency-star5" name="consistency" value="5">
+                        <label for="consistency-star5" class="fas fa-star"></label>
+                        <input type="radio" id="consistency-star4" name="consistency" value="4">
+                        <label for="consistency-star4" class="fas fa-star"></label>
+                        <input type="radio" id="consistency-star3" name="consistency" value="3">
+                        <label for="consistency-star3" class="fas fa-star"></label>
+                        <input type="radio" id="consistency-star2" name="consistency" value="2">
+                        <label for="consistency-star2" class="fas fa-star"></label>
+                        <input type="radio" id="consistency-star1" name="consistency" value="1">
+                        <label for="consistency-star1" class="fas fa-star"></label>
                     </div>
                 </div>
             </div>
 
             <div class="navigation">
-                <button class="nav-button" onclick="previousSample()" id="prev-btn" disabled>上一张图片</button>
-                <button class="nav-button" onclick="finishRating()" id="finish-btn" style="display: none;">完成评分</button>
+                <button id="prev-button" class="nav-button">上一题</button>
+                <button id="next-button" class="nav-button">下一题</button>
             </div>
         </div>
 
-        <!-- 右侧AI助手面板 -->
         <div class="right-panel">
-            <div class="ai-assistant" id="aiAssistant">
+            <div class="progress">
+                <h2>评分进度</h2>
+                <p id="progress-text">0/0</p>
+            </div>
+            <div class="ai-assistant">
                 <div class="ai-assistant-header">
                     <h3><i class="fas fa-robot"></i> AI助手</h3>
                 </div>
@@ -773,325 +940,13 @@
     </div>
 
     <script>
-        // 全局变量声明
         let currentIndex = 0;
-        let ratings = {
-            imageQuality: Array(3).fill(null),
-            textQuality: Array(3).fill(null),
-            consistency: Array(3).fill(null)
-        };
-        let raterId = null;
         let samples = [];
-        let totalSamples = 0;
+        let ratings = {};
+        let raterId = null;
 
-        // 评分问题配置
-        const questions = {
-            imageQuality: [
-                "图像是否看不清细节？",
-                "图像是否过亮、过暗或对比度不当？",
-                "图像是否存在遮挡或裁剪？"
-            ],
-            textQuality: [
-                "表达是否混乱或难以理解？",
-                "描述是否不完整或有断句？",
-                "描述是否太短以至于无法理解？"
-            ],
-            consistency: [
-                "描述是否与图像不对应？",
-                "重要特征是否未描述？",
-                "文字描述是否有无关或多余内容？"
-            ]
-        };
-
-        // 添加问题导航相关变量
-        let currentQuestionIndex = 0;
-        const totalQuestions = 9; // 3个问题 × 3个类别
-
-        // 获取当前问题的类别和索引
-        function getCurrentQuestionInfo() {
-            let category, categoryIndex;
-            if (currentQuestionIndex < 3) {
-                category = 'image';
-                categoryIndex = currentQuestionIndex;
-            } else if (currentQuestionIndex < 6) {
-                category = 'text';
-                categoryIndex = currentQuestionIndex - 3;
-            } else {
-                category = 'consistency';
-                categoryIndex = currentQuestionIndex - 6;
-            }
-            return { category, categoryIndex };
-        }
-
-        // 更新当前问题显示
-        function updateCurrentQuestion() {
-            const { category, categoryIndex } = getCurrentQuestionInfo();
-            const categoryTitles = {
-                'image': '图像质量评估',
-                'text': '文本质量评估',
-                'consistency': '图文一致性评估'
-            };
-            
-            // 更新类别标题和问题进度
-            document.getElementById('current-category').textContent = categoryTitles[category];
-            document.getElementById('question-progress').textContent = `问题 ${currentQuestionIndex + 1}/9`;
-            
-            // 获取当前问题
-            let question;
-            if (category === 'image') {
-                question = questions.imageQuality[categoryIndex];
-            } else if (category === 'text') {
-                question = questions.textQuality[categoryIndex];
-            } else {
-                question = questions.consistency[categoryIndex];
-            }
-            
-            // 更新问题显示
-            const currentQuestion = document.getElementById('current-question');
-            currentQuestion.innerHTML = `
-                <p>${question}</p>
-                <div class="yes-no-buttons">
-                    <button type="button" class="yes-no-button yes" onclick="setAnswer('${category}', ${categoryIndex}, 1)">是</button>
-                    <button type="button" class="yes-no-button no" onclick="setAnswer('${category}', ${categoryIndex}, 0)">否</button>
-                </div>
-            `;
-            
-            // 更新按钮状态
-            document.getElementById('prev-question-btn').disabled = currentQuestionIndex === 0;
-            
-            // 如果有已保存的答案，显示选中状态
-            if (ratings[currentIndex]) {
-                const rating = ratings[currentIndex];
-                const buttons = currentQuestion.querySelectorAll('.yes-no-button');
-                let score;
-                if (category === 'image') score = rating.image_quality;
-                else if (category === 'text') score = rating.text_quality;
-                else score = rating.consistency;
-                
-                if (score !== undefined) {
-                    buttons.forEach(button => {
-                        button.classList.remove('selected');
-                        if ((categoryIndex < score && button.classList.contains('yes')) ||
-                            (categoryIndex >= score && button.classList.contains('no'))) {
-                            button.classList.add('selected');
-                        }
-                    });
-                }
-            }
-        }
-
-        // 问题导航函数
-        function previousQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                updateCurrentQuestion();
-            }
-        }
-
-        function nextQuestion() {
-            if (currentQuestionIndex < totalQuestions - 1) {
-                // 检查当前问题是否已回答
-                const { category, categoryIndex } = getCurrentQuestionInfo();
-                const questionDiv = document.getElementById('current-question');
-                const hasAnswer = questionDiv.querySelector('.yes-no-button.selected');
-                
-                if (!hasAnswer) {
-                    alert('请先回答当前问题');
-                    return;
-                }
-                
-                currentQuestionIndex++;
-                updateCurrentQuestion();
-            } else {
-                // 在最后一个问题时，检查所有问题是否都已回答
-                if (checkAllQuestionsAnswered()) {
-                    nextSample();
-                } else {
-                    alert('请确保所有问题都已回答');
-                }
-            }
-        }
-
-        // 检查所有问题是否都已回答
-        function checkAllQuestionsAnswered() {
-            const rating = ratings[currentIndex] || {};
-            const imageButtons = document.querySelectorAll('[id^="image-q"] .yes-no-button.selected');
-            const textButtons = document.querySelectorAll('[id^="text-q"] .yes-no-button.selected');
-            const consistencyButtons = document.querySelectorAll('[id^="consistency-q"] .yes-no-button.selected');
-            
-            // 如果已经保存了评分，直接返回true
-            if (rating.image_quality !== undefined && 
-                rating.text_quality !== undefined && 
-                rating.consistency !== undefined) {
-                return true;
-            }
-            
-            // 如果正在评分过程中，检查当前问题是否已回答
-            const currentQuestion = document.querySelector('.yes-no-button.selected');
-            return currentQuestion !== null;
-        }
-
-        // 修改updateSample函数
-        function updateSample() {
-            // 移除已存在的评分总结动画
-            const existingSummary = document.querySelector('.rating-summary');
-            if (existingSummary) {
-                existingSummary.remove();
-            }
-
-            // 恢复所有按钮的可用性
-            const allButtons = document.querySelectorAll('.yes-no-button');
-            allButtons.forEach(button => {
-                button.disabled = false;
-                button.classList.remove('selected');
-            });
-
-            document.getElementById('current-index').textContent = currentIndex + 1;
-            
-            const currentSample = samples[currentIndex];
-            if (!currentSample) {
-                console.error('Sample not found for index:', currentIndex);
-                return;
-            }
-
-            // 重置评分数据
-            ratings[currentIndex] = {
-                image_quality: 0,
-                text_quality: 0,
-                consistency: 0,
-                image_answers: Array(3).fill(-1),
-                text_answers: Array(3).fill(-1),
-                consistency_answers: Array(3).fill(-1)
-            };
-
-            // 更新图片和标题
-            const img = document.getElementById('sample-image');
-            img.src = currentSample.image_url;
-            img.alt = `医学图像 ${currentIndex + 1}`;
-            img.onerror = function() {
-                console.error('Failed to load image:', currentSample.image_url);
-                this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="50%" y="50%" text-anchor="middle">图片加载失败</text></svg>';
-            };
-
-            // 更新文本
-            document.getElementById('sample-text').textContent = currentSample.text;
-            
-            // 更新按钮状态
-            document.getElementById('prev-btn').disabled = currentIndex === 0;
-            document.getElementById('finish-btn').style.display = 'none';
-
-            // 重置当前问题索引并更新问题显示
-            currentQuestionIndex = 0;
-            updateCurrentQuestion();
-
-            // 重置所有星星状态
-            resetStarsDisplay();
-        }
-
-        // 修改setAnswer函数
-        function setAnswer(category, questionIndex, value) {
-            // 如果正在显示评分总结，先移除它
-            const existingSummary = document.querySelector('.rating-summary');
-            if (existingSummary) {
-                existingSummary.remove();
-            }
-
-            // 更新当前问题的按钮状态
-            const currentQuestion = document.getElementById('current-question');
-            const buttons = currentQuestion.querySelectorAll('.yes-no-button');
-            
-            buttons.forEach(button => {
-                button.classList.remove('selected');
-                if ((value === 1 && button.classList.contains('yes')) ||
-                    (value === 0 && button.classList.contains('no'))) {
-                    button.classList.add('selected');
-                }
-            });
-
-            // 更新星星状态
-            updateStarsDisplay(category, questionIndex, value);
-
-            // 等待一小段时间确保状态更新完成
-            setTimeout(() => {
-                if (currentQuestionIndex < totalQuestions - 1) {
-                    currentQuestionIndex++;
-                    updateCurrentQuestion();
-                } else if (currentQuestionIndex === totalQuestions - 1) {
-                    // 在第9个问题（最后一个问题）完成时，显示评分总结并延迟进入下一个样本
-                    showRatingSummary();
-                    
-                    // 禁用所有按钮，防止在切换过程中继续点击
-                    const allButtons = document.querySelectorAll('.yes-no-button');
-                    allButtons.forEach(button => {
-                        button.disabled = true;
-                    });
-                    
-                    if (currentIndex < totalSamples - 1) {
-                        // 自动保存当前评分
-                        saveCurrentRating();
-                        
-                        setTimeout(() => {
-                            // 添加页面切换动画
-                            const mainContent = document.querySelector('.main-content');
-                            mainContent.classList.add('page-transition-out');
-
-                            setTimeout(() => {
-                                // 进入下一个样本
-                                currentIndex++;
-                                updateSample();
-                                resetAIAssistant();
-
-                                // 添加新页面的进入动画
-                                mainContent.classList.remove('page-transition-out');
-                                mainContent.classList.add('page-transition-in');
-
-                                // 移除动画类
-                                setTimeout(() => {
-                                    mainContent.classList.remove('page-transition-in');
-                                }, 500);
-                            }, 500);
-                        }, 1500); // 修改为1.5秒后切换到下一个样本
-                    } else {
-                        // 显示完成按钮
-                        document.getElementById('finish-btn').style.display = 'inline';
-                    }
-                }
-            }, 100);
-        }
-
-        // 修改saveCurrentRating函数
-        function saveCurrentRating(isGoingBack = false) {
-            const rating = {
-                image_id: samples[currentIndex].id,
-                rater_id: raterId,
-                image_quality: (ratings[currentIndex] || {}).image_quality || 0,
-                text_quality: (ratings[currentIndex] || {}).text_quality || 0,
-                consistency: (ratings[currentIndex] || {}).consistency || 0
-            };
-
-            // 如果是返回上一个样本，或者已经完成了所有问题，就保存评分
-            if (isGoingBack || checkAllQuestionsAnswered()) {
-                ratings[currentIndex] = rating;
-
-                fetch('/submit_rating', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(rating)
-                }).catch(error => {
-                    console.error('Error saving rating:', error);
-                });
-
-                return true;
-            } else {
-                alert('请完成当前问题的评分');
-                return false;
-            }
-        }
-
-        // 页面加载时初始化
-        document.addEventListener('DOMContentLoaded', function() {
+        // 加载样本数据
+        window.onload = function() {
             // 获取评分者ID
             raterId = localStorage.getItem('raterId');
             if (!raterId) {
@@ -1099,267 +954,166 @@
                 return;
             }
 
-            try {
-                // 从服务器获取样本数据
-                samples = JSON.parse('{{ samples|tojson|safe }}');
-                totalSamples = samples.length;
-
-                // 更新总样本数显示
-                document.getElementById('total-samples').textContent = totalSamples;
-
-                if (totalSamples === 0) {
-                    alert('没有找到可评分的样本');
-                    window.location.href = '/';
-                    return;
-                }
-
-                // 初始化界面
-                updateSample();
-                resetAIAssistant();
-                
-                // 添加键盘快捷键
-                document.addEventListener('keydown', function(event) {
-                    if (event.ctrlKey && event.key === 'q') {
-                        const selectedText = window.getSelection().toString().trim();
-                        if (selectedText) queryAI(selectedText);
+            console.log('Loading samples...'); // 添加调试信息
+            fetch('/static/selected_pairs.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Samples loaded:', data); // 添加调试信息
+                    if (!Array.isArray(data)) {
+                        throw new Error('Loaded data is not an array');
+                    }
+                    // 使用Fisher-Yates洗牌算法随机打乱样本顺序
+                    samples = data.slice(); // 创建数组副本
+                    for (let i = samples.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [samples[i], samples[j]] = [samples[j], samples[i]];
+                    }
+                    updateProgress();
+                    showCurrentSample();
+                })
+                .catch(error => {
+                    console.error('Error loading samples:', error);
+                    alert('加载样本数据失败，请刷新页面重试');
                 });
-            } catch (error) {
-                console.error('Error initializing:', error);
-                alert('初始化失败，请刷新页面重试');
+        };
+
+        // 更新进度显示
+        function updateProgress() {
+            const progressText = document.getElementById('progress-text');
+            const totalRated = Object.keys(ratings).length;
+            progressText.textContent = `${totalRated}/${samples.length}`;
+        }
+
+        // 显示当前样本
+        function showCurrentSample() {
+            if (currentIndex >= 0 && currentIndex < samples.length) {
+                const sample = samples[currentIndex];
+                console.log('Current sample:', sample); // 添加调试信息
+
+                const imageElement = document.getElementById('current-image');
+                const textElement = document.getElementById('current-text');
+
+                // 构建图片URL
+                const imageUrl = sample.image_url || `/static/images/${sample.image}`;
+                console.log('Loading image from URL:', imageUrl); // 添加调试信息
+
+                // 设置图片src
+                imageElement.src = imageUrl;
+                imageElement.alt = `医学图像 ${currentIndex + 1}`;
+                
+                // 添加图片加载错误处理
+                imageElement.onerror = function() {
+                    console.error('Failed to load image:', imageUrl);
+                    this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="50%" y="50%" text-anchor="middle">图片加载失败</text></svg>';
+                    this.alt = '图片加载失败';
+                };
+
+                // 设置文本内容
+                textElement.textContent = sample.text || '无文本内容';
+
+                // 恢复之前的评分（如果有）
+                const rating = ratings[sample.id || sample.image];
+                if (rating) {
+                    try {
+                        document.querySelector(`input[name="image-quality"][value="${rating.image_quality}"]`).checked = true;
+                        document.querySelector(`input[name="text-quality"][value="${rating.text_quality}"]`).checked = true;
+                        document.querySelector(`input[name="consistency"][value="${rating.consistency}"]`).checked = true;
+                    } catch (error) {
+                        console.error('Error restoring ratings:', error);
+                    }
+                } else {
+                    // 清除之前的评分
+                    document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+                }
+            } else {
+                console.error('Invalid currentIndex:', currentIndex, 'samples length:', samples.length);
+            }
+        }
+
+        // 提交评分
+        function submitRating() {
+            const imageQuality = document.querySelector('input[name="image-quality"]:checked')?.value;
+            const textQuality = document.querySelector('input[name="text-quality"]:checked')?.value;
+            const consistency = document.querySelector('input[name="consistency"]:checked')?.value;
+
+            if (!imageQuality || !textQuality || !consistency) {
+                alert('请完成所有维度的评分');
+                return false;
+            }
+
+            const sample = samples[currentIndex];
+            const rating = {
+                image_id: sample.id || sample.image,  // 使用id或image作为标识符
+                rater_id: raterId,
+                image_quality: parseInt(imageQuality),
+                text_quality: parseInt(textQuality),
+                consistency: parseInt(consistency)
+            };
+
+            // 保存评分
+            ratings[rating.image_id] = rating;
+
+            // 提交到服务器
+            fetch('/submit_rating', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(rating)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    updateProgress();
+                    return true;
+                } else {
+                    alert('提交评分失败');
+                    return false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('提交评分时发生错误');
+                return false;
+            });
+
+            return true;
+        }
+
+        // 导航按钮事件处理
+        document.getElementById('prev-button').addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                showCurrentSample();
             }
         });
 
-        // AI助手快捷功能
-        function explainContext() {
-            const text = document.getElementById('sample-text').textContent;
-            queryAI(`请解释这段医学报告的主要内容：${text}`);
-        }
-
-        function explainTerms() {
-            const text = document.getElementById('sample-text').textContent;
-            queryAI(`请列出并解释这段文本中的专业术语：${text}`);
-        }
-
-        function translateCaption() {
-            const text = document.getElementById('sample-text').textContent;
-            const translationRequest = {
-                type: 'translation',
-                text: text,
-                system_prompt: "你是一个专业的医学翻译。请直接将输入的英文医学文本翻译成中文。要求：1. 直接给出翻译结果 2. 不要解释 3. 不要添加markdown格式 4. 不要分析 5. 保持原文的简洁性。"
-            };
-            queryAI(JSON.stringify(translationRequest));
-        }
-
-        // 修改updateCategoryScore函数
-        function updateCategoryScore(category) {
-            const { categoryIndex } = getCurrentQuestionInfo();
-            let currentRating = ratings[currentIndex];
-            
-            if (!currentRating) {
-                currentRating = {
-                    image_id: samples[currentIndex].id,
-                    image_quality: 0,
-                    text_quality: 0,
-                    consistency: 0,
-                    image_answers: Array(5).fill(-1),
-                    text_answers: Array(5).fill(-1),
-                    consistency_answers: Array(5).fill(-1),
-                    sample_index: currentIndex
-                };
-                ratings[currentIndex] = currentRating;
-            }
-
-            // 确保答案数组存在
-            if (!currentRating.image_answers) currentRating.image_answers = Array(5).fill(-1);
-            if (!currentRating.text_answers) currentRating.text_answers = Array(5).fill(-1);
-            if (!currentRating.consistency_answers) currentRating.consistency_answers = Array(5).fill(-1);
-
-            // 获取当前回答
-            const isYes = document.querySelector('#current-question .yes-no-button.yes.selected') !== null;
-            const value = isYes ? 1 : 0;
-
-            // 更新答案数组
-            switch(category) {
-                case 'image':
-                    currentRating.image_answers[categoryIndex] = value;
-                    currentRating.image_quality = currentRating.image_answers.filter(v => v === 1).length;
-                    break;
-                case 'text':
-                    currentRating.text_answers[categoryIndex] = value;
-                    currentRating.text_quality = currentRating.text_answers.filter(v => v === 1).length;
-                    break;
-                case 'consistency':
-                    currentRating.consistency_answers[categoryIndex] = value;
-                    currentRating.consistency = currentRating.consistency_answers.filter(v => v === 1).length;
-                    break;
-            }
-
-            // 保存更新后的评分
-            ratings[currentIndex] = currentRating;
-        }
-
-        // 修改updateStarsDisplay函数
-        function updateStarsDisplay(category, questionIndex, value) {
-            const categoryMap = {
-                'image': 'image-quality-stars',
-                'text': 'text-quality-stars',
-                'consistency': 'consistency-quality-stars'
-            };
-
-            const starsContainer = document.getElementById(categoryMap[category]);
-            if (!starsContainer) return;
-
-            const stars = starsContainer.querySelectorAll('.star');
-            let currentRating = ratings[currentIndex];
-            
-            if (!currentRating) {
-                currentRating = {
-                    image_answers: Array(3).fill(-1),
-                    text_answers: Array(3).fill(-1),
-                    consistency_answers: Array(3).fill(-1)
-                };
-                ratings[currentIndex] = currentRating;
-            }
-
-            // 确保答案数组存在
-            if (!currentRating.image_answers) currentRating.image_answers = Array(3).fill(-1);
-            if (!currentRating.text_answers) currentRating.text_answers = Array(3).fill(-1);
-            if (!currentRating.consistency_answers) currentRating.text_answers = Array(3).fill(-1);
-
-            // 获取对应类别的答案数组
-            let answers;
-            switch(category) {
-                case 'image':
-                    answers = currentRating.image_answers;
-                    break;
-                case 'text':
-                    answers = currentRating.text_answers;
-                    break;
-                case 'consistency':
-                    answers = currentRating.consistency_answers;
-                    break;
-            }
-
-            // 更新当前问题的答案
-            answers[questionIndex] = value;
-
-            // 更新星星显示
-            stars.forEach((star, index) => {
-                star.classList.remove('active', 'inactive');
-                // 默认所有星星都是金色（active）
-                star.classList.add('active');
-                
-                if (answers[index] !== -1) {  // 只处理已回答的问题
-                    if (answers[index] === 1) {
-                        star.classList.remove('active');  // 移除金色
-                        star.classList.add('inactive');   // 添加深灰色，表示发现了问题
-                    }
+        document.getElementById('next-button').addEventListener('click', () => {
+            if (submitRating()) {
+                if (currentIndex < samples.length - 1) {
+                    currentIndex++;
+                    showCurrentSample();
+                } else {
+                    // 显示完成按钮
+                    document.getElementById('next-button').textContent = '完成评分';
+                    document.getElementById('next-button').onclick = finishRating;
                 }
-            });
-
-            // 更新总分（现在是从3分开始，每个"是"答案减1分）
-            switch(category) {
-                case 'image':
-                    currentRating.image_answers = answers;
-                    currentRating.image_quality = 3 - answers.filter(v => v === 1).length;
-                    break;
-                case 'text':
-                    currentRating.text_answers = answers;
-                    currentRating.text_quality = 3 - answers.filter(v => v === 1).length;
-                    break;
-                case 'consistency':
-                    currentRating.consistency_answers = answers;
-                    currentRating.consistency = 3 - answers.filter(v => v === 1).length;
-                    break;
             }
+        });
 
-            // 保存更新后的评分
-            ratings[currentIndex] = currentRating;
-        }
-
-        // 修改resetStarsDisplay函数
-        function resetStarsDisplay() {
-            const categories = ['image', 'text', 'consistency'];
-            categories.forEach(category => {
-                const starsContainer = document.getElementById(`${category}-quality-stars`);
-                if (!starsContainer) return;
-
-                const stars = starsContainer.querySelectorAll('.star');
-                stars.forEach(star => {
-                    star.classList.remove('inactive');
-                    star.classList.add('active');  // 重置时所有星星都是金色（满分状态）
-                });
-            });
-        }
-
-        // 修改getPreviousAnswer函数
-        function getPreviousAnswer(category, questionIndex) {
-            const currentRating = ratings[currentIndex];
-            if (!currentRating) return -1;
-
-            let score;
-            if (category === 'image') score = currentRating.image_quality || 0;
-            else if (category === 'text') score = currentRating.text_quality || 0;
-            else score = currentRating.consistency || 0;
-
-            // 只返回已经回答过的问题的状态
-            if (questionIndex < score) return 1;
-            else return 0;
-        }
-
-        // 添加导航函数
-        function previousSample() {
-            if (currentIndex > 0) {
-                saveCurrentRating(true);
-                currentIndex--;
-                updateSample();
-                resetAIAssistant();
+        // 添加键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                document.getElementById('prev-button').click();
+            } else if (e.key === 'ArrowRight') {
+                document.getElementById('next-button').click();
             }
-        }
-
-        function nextSample() {
-            if (currentIndex < totalSamples - 1) {
-                // 自动保存当前评分
-                const rating = {
-                    image_id: samples[currentIndex].id,
-                    rater_id: raterId,
-                    image_quality: (ratings[currentIndex] || {}).image_quality || 0,
-                    text_quality: (ratings[currentIndex] || {}).text_quality || 0,
-                    consistency: (ratings[currentIndex] || {}).consistency || 0
-                };
-                
-                ratings[currentIndex] = rating;
-
-                // 发送评分到服务器
-                fetch('/submit_rating', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(rating)
-                }).catch(error => {
-                    console.error('Error saving rating:', error);
-                });
-
-                // 进入下一个样本
-                currentIndex++;
-                updateSample();
-                resetAIAssistant();
-            }
-        }
-
-        function finishRating() {
-            // 自动导出结果
-            window.location.href = `/export_results/${raterId}`;
-        }
-
-        // 添加samples-data脚本标签
-        const samplesDataScript = document.createElement('script');
-        samplesDataScript.id = 'samples-data';
-        samplesDataScript.type = 'application/json';
-        samplesDataScript.textContent = '{{ samples|tojson|safe }}';
-        document.body.appendChild(samplesDataScript);
+        });
 
         // 添加AI助手相关函数
         let chatHistory = [];
@@ -1378,7 +1132,7 @@
                     </div>
                     <div class="ai-message-content">
                         <p>当前文本内容为：</p>
-                        <div class="current-context">${document.getElementById('sample-text').textContent}</div>
+                        <div class="current-context">${document.getElementById('current-text').textContent}</div>
                         <p>您可以：</p>
                         <ul>
                             <li>点击上方按钮快速解释内容</li>
@@ -1493,7 +1247,7 @@
                     },
                     body: JSON.stringify({
                         query: query,
-                        context: document.getElementById('sample-text').textContent,
+                        context: document.getElementById('current-text').textContent,
                         history: chatHistory,
                         type: requestType
                     })
@@ -1525,6 +1279,27 @@
             }
         }
 
+        // AI助手快捷功能
+        function explainContext() {
+            const text = document.getElementById('current-text').textContent;
+            queryAI(`请解释这段医学报告的主要内容：${text}`);
+        }
+
+        function explainTerms() {
+            const text = document.getElementById('current-text').textContent;
+            queryAI(`请列出并解释这段文本中的专业术语：${text}`);
+        }
+
+        function translateCaption() {
+            const text = document.getElementById('current-text').textContent;
+            const translationRequest = {
+                type: 'translation',
+                text: text,
+                system_prompt: "你是一个专业的医学翻译。请直接将输入的英文医学文本翻译成中文。要求：1. 直接给出翻译结果 2. 不要解释 3. 不要添加markdown格式 4. 不要分析 5. 保持原文的简洁性。"
+            };
+            queryAI(JSON.stringify(translationRequest));
+        }
+
         // 添加文本选择事件监听
         document.addEventListener('mouseup', function(event) {
             const selectedText = window.getSelection().toString().trim();
@@ -1533,102 +1308,89 @@
             }
         });
 
-        // 添加评分总结的函数
-        function showRatingSummary() {
-            // 移除已存在的评分总结
-            const existingSummary = document.querySelector('.rating-summary');
-            if (existingSummary) {
-                existingSummary.remove();
-            }
+        // 在页面加载完成后初始化AI助手
+        document.addEventListener('DOMContentLoaded', function() {
+            resetAIAssistant();
+        });
 
-            // 计算总分
-            const currentRating = ratings[currentIndex];
-            const totalScore = (currentRating.image_quality || 0) + 
-                             (currentRating.text_quality || 0) + 
-                             (currentRating.consistency || 0);
+        // 在显示新样本时重置AI助手
+        const originalShowCurrentSample = showCurrentSample;
+        showCurrentSample = function() {
+            originalShowCurrentSample();
+            resetAIAssistant();
+        };
 
-            // 定义评级标准
-            const ratingLevels = [
-                { min: 8, text: "Outstanding", color: "#2ecc71", icon: "crown", desc: "卓越" },
-                { min: 6, text: "Excellent", color: "#27ae60", icon: "star", desc: "优秀" },
-                { min: 4, text: "Good", color: "#3498db", icon: "thumbs-up", desc: "良好" },
-                { min: 2, text: "Fair", color: "#f1c40f", icon: "meh", desc: "一般" },
-                { min: 0, text: "Poor", color: "#e74c3c", icon: "times-circle", desc: "不足" }
-            ];
-
-            // 获取对应的评级
-            const rating = ratingLevels.find(level => totalScore >= level.min);
-
-            // 创建评分总结元素
-            const summary = document.createElement('div');
-            summary.className = 'rating-summary';
-            summary.innerHTML = `
-                <i class="fas fa-${rating.icon}"></i>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
-                    <span style="font-size: 1.2em;">${rating.text}</span>
-                    <span style="font-size: 0.7em; opacity: 0.9;">${rating.desc}</span>
-                    <span style="font-size: 0.6em; opacity: 0.8;">${totalScore}/9</span>
-                </div>
-            `;
-            summary.style.backgroundColor = rating.color;
-
-            // 添加到页面并触发动画
-            document.body.appendChild(summary);
-            setTimeout(() => {
-                summary.classList.add('show', 'stamp');
-            }, 100);
-        }
-
-        // 显示感谢弹窗
-        function showThankYouModal() {
-            document.getElementById('modalOverlay').style.display = 'block';
-            document.getElementById('thankYouModal').style.display = 'block';
-        }
-
-        // 关闭感谢弹窗
-        function closeThankYouModal() {
-            document.getElementById('modalOverlay').style.display = 'none';
-            document.getElementById('thankYouModal').style.display = 'none';
-        }
-
-        // 修改完成评分的处理函数
+        // 添加完成评分功能
         async function finishRating() {
-            const raterId = localStorage.getItem('raterId');
-            if (!raterId) {
-                alert('无法获取评分者ID');
+            if (!submitRating()) {
                 return;
             }
 
             try {
-                // 移除总分印章
-                const existingSummary = document.querySelector('.rating-summary');
-                if (existingSummary) {
-                    existingSummary.remove();
-                }
+                // 获取所有评分数据并格式化
+                const formattedRatings = samples.map(sample => {
+                    const rating = ratings[sample.id || sample.image];
+                    if (!rating) return null;
 
-                // 清理评分数据
-                await fetch(`/clean_ratings/${raterId}`);
-                
-                // 导出评分结果
-                const response = await fetch(`/export_results/${raterId}`);
-                const blob = await response.blob();
+                    return {
+                        image_id: sample.id || sample.image.replace(/\.[^/.]+$/, ""), // 移除文件扩展名
+                        image_path: `/static/images/${sample.image}`,
+                        text: sample.text,
+                        image_quality: rating.image_quality,
+                        text_quality: rating.text_quality,
+                        consistency: rating.consistency,
+                        total_score: rating.image_quality + rating.text_quality + rating.consistency,
+                        rank: 0  // 初始化排名为0
+                    };
+                }).filter(r => r !== null);
+
+                // 根据total_score计算排名
+                formattedRatings.sort((a, b) => b.total_score - a.total_score);  // 降序排序
+                formattedRatings.forEach((rating, index) => {
+                    rating.rank = index + 1;  // 设置排名，从1开始
+                });
+
+                // 准备完整的下载数据，包含元数据
+                const downloadData = {
+                    rater_id: raterId,
+                    evaluation_date: new Date().toISOString().replace('T', ' ').substring(0, 19),  // 格式化为 "YYYY-MM-DD HH:mm:ss"
+                    total_samples: formattedRatings.length,
+                    results: formattedRatings
+                };
+
+                // 创建Blob对象
+                const blob = new Blob([JSON.stringify(downloadData, null, 2)], { type: 'application/json' });
+                const url = window.URL.createObjectURL(blob);
                 
                 // 创建下载链接
-                const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = `rating_results_${raterId}.json`;
+                
+                // 显示感谢弹窗
+                const modalOverlay = document.getElementById('modalOverlay');
+                const thankYouModal = document.getElementById('thankYouModal');
+                modalOverlay.style.display = 'block';
+                thankYouModal.style.display = 'block';
+                
+                // 触发下载
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
                 window.URL.revokeObjectURL(url);
 
-                // 显示感谢弹窗
-                showThankYouModal();
             } catch (error) {
-                console.error('Error:', error);
-                alert('导出评分结果时发生错误');
+                console.error('Error finishing rating:', error);
+                alert('导出评分数据时发生错误，请重试');
             }
+        }
+
+        // 修改关闭感谢弹窗的函数
+        function closeThankYouModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+            document.getElementById('thankYouModal').style.display = 'none';
+            // 返回首页
+            window.location.href = '/';
         }
     </script>
 </body>
