@@ -679,7 +679,7 @@
         .rating-tooltip {
             display: none;
             position: fixed;
-            left: 50%;
+            left: 20%;
             top: 50%;
             transform: translate(-50%, -50%);
             width: 450px;
@@ -760,15 +760,16 @@
         /* 确保tooltip在所有屏幕尺寸下都居中显示 */
         @media (max-width: 1400px) {
             .rating-tooltip {
-                left: 50%;
-                right: auto;
-                transform: translate(-50%, -50%);
+                left: 300px;
+                transform: translateY(-50%);
                 margin: 0;
             }
         }
 
         @media (max-width: 768px) {
             .rating-tooltip {
+                left: 50%;
+                transform: translate(-50%, -50%);
                 width: 90%;
                 max-width: 400px;
             }
