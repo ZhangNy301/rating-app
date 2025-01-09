@@ -1,0 +1,307 @@
+{
+  "rater_id": "Xiexinyu",
+  "evaluation_date": "2025-01-09 05:20:55",
+  "total_samples": 30,
+  "results": [
+    {
+      "image_id": "PMC8525029_Fig5_87188",
+      "image_path": "/static/images/PMC8525029_Fig5_87188.jpg",
+      "text": "The OCT examination of left eye after one month of first injection of ranibizumab",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 1
+    },
+    {
+      "image_id": "PMC3753263_pone-0073862-g002_227341",
+      "image_path": "/static/images/PMC3753263_pone-0073862-g002_227341.jpg",
+      "text": "Immunohistochemistry of frozen sections in mouse pancreas reacted by primary antibody of Aire KO mice pooled sera",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 2
+    },
+    {
+      "image_id": "PMC5567554_Fig1_206062",
+      "image_path": "/static/images/PMC5567554_Fig1_206062.jpg",
+      "text": "Immediately postoperativ",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 3
+    },
+    {
+      "image_id": "PMC7558521_jof-06-00102-f001_273276",
+      "image_path": "/static/images/PMC7558521_jof-06-00102-f001_273276.jpg",
+      "text": "Macroscopic mold colony morphology after incubation at 25 °C for 12 days. Red pigment production is shown on the reverse side of the culture",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 4
+    },
+    {
+      "image_id": "PMC9420338_fig3_387516",
+      "image_path": "/static/images/PMC9420338_fig3_387516.jpg",
+      "text": "Lymph nodal parenchyma is replaced partially by irregularly distributed thick-walled vessels and smooth muscle cells in a dense fibro-collagenous stroma.",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 5
+    },
+    {
+      "image_id": "PMC8217269_Fig3_472362",
+      "image_path": "/static/images/PMC8217269_Fig3_472362.jpg",
+      "text": "Microscopic image of male gonads (Brightfield",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 6
+    },
+    {
+      "image_id": "PMC8192200_fig2_463487",
+      "image_path": "/static/images/PMC8192200_fig2_463487.jpg",
+      "text": "Bile pigment (Fouchet stained",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 7
+    },
+    {
+      "image_id": "PMC8081304_F0001_429903",
+      "image_path": "/static/images/PMC8081304_F0001_429903.jpg",
+      "text": "Pathologic examinations of the thoracic aorta. Endothelial inflammation is indicated by an arrow",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 8
+    },
+    {
+      "image_id": "PMC7496426_aos14327-fig-0004_255557",
+      "image_path": "/static/images/PMC7496426_aos14327-fig-0004_255557.jpg",
+      "text": "3 × 3‐mm2 sca",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 9
+    },
+    {
+      "image_id": "PMC8682969_F3_141730",
+      "image_path": "/static/images/PMC8682969_F3_141730.jpg",
+      "text": "Representative image of mouse left ventricular section stained with Masson’s trichrome and photographed with fluorescence microscope (magnification, ×400). Bars = 50 µm. Collagen fibers are stained blue, reflecting the degree of myocardial fibrosis",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 10
+    },
+    {
+      "image_id": "PMC4016932_fig4_287689",
+      "image_path": "/static/images/PMC4016932_fig4_287689.jpg",
+      "text": "Indocyanine green angiography (ICGA) with hypofluorescent areas;",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 11
+    },
+    {
+      "image_id": "PMC5820550_fig1_278621",
+      "image_path": "/static/images/PMC5820550_fig1_278621.jpg",
+      "text": "Computed tomogram of the abdomen-pelvis with contrast shows a 4.5 × 3.3 cm heterogeneous, enhancing soft-tissue density mass within the right kidney with a patent right renal vein (white arrow).",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 12
+    },
+    {
+      "image_id": "PMC6404559_F7_446159",
+      "image_path": "/static/images/PMC6404559_F7_446159.jpg",
+      "text": "Representative images of vWF antigen were enhanced in all pellet treatments, particularly in implants containing HUVEC fractions (visible gaps in surrounding tissue at marrow cavity) as well as the surrounding tissue (arrows)",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 13
+    },
+    {
+      "image_id": "PMC7446515_fig1_239768",
+      "image_path": "/static/images/PMC7446515_fig1_239768.jpg",
+      "text": "Germline PTEN mutation c.389G>A, pR130Q. CDC14, phosphatase domain. Illustration from https://proteinpaint.stjude.org",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 14
+    },
+    {
+      "image_id": "PMC3390899_F2_144082",
+      "image_path": "/static/images/PMC3390899_F2_144082.jpg",
+      "text": "SEM of fern Thelypteris ovata var. lindheimeri (sporophyte) leaf with stomata separated by pavement cells. Scale bar, 10 μm; s, stomata [6].",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 15
+    },
+    {
+      "image_id": "PMC4869036_f2_31130",
+      "image_path": "/static/images/PMC4869036_f2_31130.jpg",
+      "text": "In three-dimensional organotypic culture, primary human esophageal keratinocytes form stratified epithelia. Cells in the basal layer were rounded with large nuclear-cytoplasmic ratios, and cells in the suprabasal and superficial layers were flattened with compacted nuclei",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 16
+    },
+    {
+      "image_id": "PMC4482291_Fig1_400369",
+      "image_path": "/static/images/PMC4482291_Fig1_400369.jpg",
+      "text": "The nanofibrous morphology of alum and vaccine aggregates (ENGERIX B®) by TEM analysis",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 17
+    },
+    {
+      "image_id": "PMC7873489_F5_364829",
+      "image_path": "/static/images/PMC7873489_F5_364829.jpg",
+      "text": "Magnetic resonance imaging at 3-month follow-up shows an old infarction focus (arrowhead) at the midbrain",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 18
+    },
+    {
+      "image_id": "PMC6993381_Fig2_108993",
+      "image_path": "/static/images/PMC6993381_Fig2_108993.jpg",
+      "text": "Computed tomography scan. Arrow: tumor",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 19
+    },
+    {
+      "image_id": "PMC3498729_fig07_166171",
+      "image_path": "/static/images/PMC3498729_fig07_166171.jpg",
+      "text": "Wnt7a gene expression in chick embryos at stages indicated. Main image is an external view (volume rendered) of whole embryo following three-dimensional imaging (OPT). Virtual longitudinal sections through the limb (dorsal up, ventral, down) and virtual transverse sections through the neural tube at the position indicated are inset",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 20
+    },
+    {
+      "image_id": "PMC4797174_Fig2_12812",
+      "image_path": "/static/images/PMC4797174_Fig2_12812.jpg",
+      "text": "F-actin is diffuse in the cytoplasm",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 9,
+      "rank": 21
+    },
+    {
+      "image_id": "PMC5462768_Fig2_176491",
+      "image_path": "/static/images/PMC5462768_Fig2_176491.jpg",
+      "text": "The group-averaged white matter skeleton (fractional anisotropy threshold > 0.2) is shown in blue",
+      "image_quality": 2,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 8,
+      "rank": 22
+    },
+    {
+      "image_id": "PMC6189830_micromachines-08-00230-f005_382455",
+      "image_path": "/static/images/PMC6189830_micromachines-08-00230-f005_382455.jpg",
+      "text": "Generation of monoclonal droplets. A diluted solution of bacteria is encapsulated into 75 μm (220 pL) droplets, collected and incubated. In these specific conditions, a single bacterium is present in populated droplets while the rest of the droplets remains empty. This approach alleviates fitness competition between bacteria and maintains complexity of the initial library. Bacteria grew overnight and saturated the droplet volume (red arrows). Scale bar represents 50 μm.",
+      "image_quality": 2,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 8,
+      "rank": 23
+    },
+    {
+      "image_id": "PMC3576185_f8-ol-05-03-0805_186377",
+      "image_path": "/static/images/PMC3576185_f8-ol-05-03-0805_186377.jpg",
+      "text": "Apoptosis assay of the xenotransplantation tumor by terminal deoxynucleotidyltransferase-mediated dUTP-biotin nick-end labeling (TUNEL) staining. The number of positive apoptotic tumor cells with brown nuclei in the LV-shB7-H3 group was markedly increased compared with that of the control group and the LV-NC group. Magnification, ×400",
+      "image_quality": 2,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 8,
+      "rank": 24
+    },
+    {
+      "image_id": "PMC8885969_Fig7_210302",
+      "image_path": "/static/images/PMC8885969_Fig7_210302.jpg",
+      "text": "Axial contrast-enhanced fat-suppressed T1-weighted MR image after treatment shows increase of the internal necrosis of the mass (*) with persisting peripheral enhancement (short arrows). Note soft tissue inflammation not present in the previous MRI (long arrow).",
+      "image_quality": 2,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 8,
+      "rank": 25
+    },
+    {
+      "image_id": "PMC6073688_ijms-19-01883-f003_349754",
+      "image_path": "/static/images/PMC6073688_ijms-19-01883-f003_349754.jpg",
+      "text": "In situ detection of H2O2 using 3,3′-diaminobenzidine (DAB) staining on rubber tree leaves after treatment with 5 mM SA. The rubber tree leaves were sprayed with either DW as a control or 5 mM SA. Leaf pieces were collected and stained after treatment at different time points (0, 3, 6, 12, 24, 48, 72, 96 and 120 h). Pictures represent three independent biological replicates. The dark brown precipitates indicate the presence and distribution of H2O2 in plant cells, which could be visualized using a light microscope (scale bars = 100 μm).",
+      "image_quality": 3,
+      "text_quality": 3,
+      "consistency": 2,
+      "total_score": 8,
+      "rank": 26
+    },
+    {
+      "image_id": "PMC8010692_f2_407066",
+      "image_path": "/static/images/PMC8010692_f2_407066.jpg",
+      "text": "Immunohistochemistry results showing the expression of MyoD1",
+      "image_quality": 2,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 8,
+      "rank": 27
+    },
+    {
+      "image_id": "PMC3571645_nutrients-05-00223-f004_185380",
+      "image_path": "/static/images/PMC3571645_nutrients-05-00223-f004_185380.jpg",
+      "text": "The effects of JC and JCH on elastin protein fiber of photoaging skin (magnification 200×); Blue-black to black: elastic fibres ().",
+      "image_quality": 3,
+      "text_quality": 2,
+      "consistency": 2,
+      "total_score": 7,
+      "rank": 28
+    },
+    {
+      "image_id": "PMC3416769_pone-0042977-g004_149300",
+      "image_path": "/static/images/PMC3416769_pone-0042977-g004_149300.jpg",
+      "text": "ACP-GFP at late trophozoite and early schizont stages was stained with anti-GFP and anti-PfAtg8 antibodies and MitoTrackerRed CMXRos",
+      "image_quality": 1,
+      "text_quality": 3,
+      "consistency": 3,
+      "total_score": 7,
+      "rank": 29
+    },
+    {
+      "image_id": "PMC7261945_fig2_181316",
+      "image_path": "/static/images/PMC7261945_fig2_181316.jpg",
+      "text": "Post-fenestration angiogram with filling of both TL and FL.",
+      "image_quality": 0,
+      "text_quality": 0,
+      "consistency": 0,
+      "total_score": 0,
+      "rank": 30
+    }
+  ]
+}
