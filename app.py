@@ -395,21 +395,21 @@ def query_ai():
             if image_url and image_url.startswith(('http://', 'https://')):
                 messages[1]["content"].append({
                     "type": "image_url",
-                    "image_url": {"url": image_url}
+                    "image_url": {"url": os.path.join('http://127.0.0.1:5000',image_url)}
                 })
-            elif image_url:
-                try:
-                    local_path = image_url.replace('http://127.0.0.1:5000/', '').lstrip('/')
-                    abs_path = os.path.join(os.path.dirname(__file__), local_path)
-                    if os.path.exists(abs_path) and os.path.getsize(abs_path) < 1024 * 1024:  # 限制图片大小为1MB
-                        with open(abs_path, 'rb') as img_file:
-                            img_data = base64.b64encode(img_file.read()).decode('utf-8')
-                            messages[1]["content"].append({
-                                "type": "image_url",
-                                "image_url": {"url": f"data:image/jpeg;base64,{img_data}"}
-                            })
-                except Exception as e:
-                    print(f"Error processing image: {e}")
+            # elif image_url:
+            #     try:
+            #         local_path = image_url.replace('http://127.0.0.1:5000/', '').lstrip('/')
+            #         abs_path = os.path.join(os.path.dirname(__file__), local_path)
+            #         if os.path.exists(abs_path) and os.path.getsize(abs_path) < 1024 * 1024:  # 限制图片大小为1MB
+            #             with open(abs_path, 'rb') as img_file:
+            #                 img_data = base64.b64encode(img_file.read()).decode('utf-8')
+            #                 messages[1]["content"].append({
+            #                     "type": "image_url",
+            #                     "image_url": {"url": f"data:image/jpeg;base64,{img_data}"}
+            #                 })
+            #     except Exception as e:
+            #         print(f"Error processing image: {e}")
             
         else:
             # 自由文本查询：医学专业问答
