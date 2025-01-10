@@ -373,78 +373,44 @@ def query_ai():
             messages = [
                 {
                     "role": "system",
-                    "content": """你是一个专业的生物医学图像和文本分析专家。请从以下三个维度进行专业评估：
+                    "content": """你是医学图文评估专家。请简要分析：
+1. 图像质量：清晰度、对比度、细节可见性
+2. 文本质量：术语准确性、描述完整性
+3. 图文一致性：特征对应关系、信息匹配度
 
-一、图像质量评估
-评估要点：
-- 空间分辨率和解剖结构清晰度
-- 病理细节可见性
-- 噪声和伪影水平
-- 灰度分布
-- 对比度效果
-
-二、文本质量评估
-评估要点：
-- 医学术语准确性
-- 符合医学报告标准
-- 描述的完整性
-- 诊断结论的清晰度
-- 医学语言的精确性
-
-三、图文一致性评估
-评估要点：
-- 文字描述与图像特征的对应关系
-- 信息表达的完整性
-- 图文的相互补充性
-- 注释和解释的准确性
-
-输出要求：
-- 使用markdown二级标题格式
-- 每个维度用2-3句话进行专业点评
-- 同时指出优点和不足
-- 使用专业、简洁的语言"""
+用简短的2-3句话评估每个维度。"""
                 },
                 {
                     "role": "user",
                     "content": [
                         {
                             "type": "text",
-                            "text": f"""请对以下医学图文对进行专业评估：
-
-文本描述：{text}
-
-评估要求：
-1. 仔细分析图像的视觉特征
-2. 详细审查配套的文字报告
-3. 评估图像和文本之间的一致性
-4. 重点关注技术图像质量、医学术语规范性和诊断信息的准确完整性"""
+                            "text": f"请评估以下医学图文对的质量：\n\n{text}"
                         }
                     ]
                 }
             ]
             
-            # 处理图片
-            if image_url:
-                if image_url.startswith('http://127.0.0.1:5000/'):
-                    local_path = image_url.replace('http://127.0.0.1:5000/', '')
+            # 优化图片处理逻辑
+            if image_url and image_url.startswith(('http://', 'https://')):
+                messages[1]["content"].append({
+                    "type": "image_url",
+                    "image_url": {"url": image_url}
+                })
+            elif image_url:
+                try:
+                    local_path = image_url.replace('http://127.0.0.1:5000/', '').lstrip('/')
                     abs_path = os.path.join(os.path.dirname(__file__), local_path)
-                    if os.path.exists(abs_path):
+                    if os.path.exists(abs_path) and os.path.getsize(abs_path) < 1024 * 1024:  # 限制图片大小为1MB
                         with open(abs_path, 'rb') as img_file:
                             img_data = base64.b64encode(img_file.read()).decode('utf-8')
                             messages[1]["content"].append({
                                 "type": "image_url",
-                                "image_url": {
-                                    "url": f"data:image/jpeg;base64,{img_data}"
-                                }
+                                "image_url": {"url": f"data:image/jpeg;base64,{img_data}"}
                             })
-                else:
-                    messages[1]["content"].append({
-                        "type": "image_url",
-                        "image_url": {
-                            "url": image_url
-                        }
-                    })
-                    
+                except Exception as e:
+                    print(f"Error processing image: {e}")
+            
         else:
             # 自由文本查询：医学专业问答
             query = data.get('query', '')
