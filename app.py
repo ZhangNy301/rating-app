@@ -395,8 +395,9 @@ def query_ai():
             if image_url and image_url.startswith(('http://', 'https://')):
                 messages[1]["content"].append({
                     "type": "image_url",
+                    "image_url": {"url": os.path.join('http://Localhost:5000', image_url)}
                     # "image_url": {"url": os.path.join('http://127.0.0.1:5000',image_url)}
-                    "image_url": {"url": os.path.join('https://rating-app-2vee.onrender.com',image_url)}
+                    # "image_url": {"url": os.path.join('https://rating-app-2vee.onrender.com',image_url)}
                 })
             # elif image_url:
             #     try:
