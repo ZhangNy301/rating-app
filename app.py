@@ -7,12 +7,25 @@ import random
 import requests
 from dotenv import load_dotenv
 from urllib.parse import quote
+from openai import OpenAI
+import base64
 
-# 加载环境变量（可选）
+# 加载环境变量
 try:
     load_dotenv()
 except:
     pass
+
+# OpenRouter API配置
+OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY')
+SITE_URL = os.getenv('SITE_URL', 'http://localhost:5000')
+SITE_NAME = os.getenv('SITE_NAME', 'Medical Image Rating System')
+
+# 初始化OpenAI客户端
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=OPENROUTER_API_KEY
+)
 
 # 数据库初始化
 def init_db():
@@ -40,10 +53,6 @@ app = Flask(__name__)
 
 # 初始化数据库
 init_db()
-
-# DeepSeek API配置
-DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY', 'sk-3614585a328445f3be6a2ae43083409b')
-DEEPSEEK_API_URL = os.getenv('DEEPSEEK_API_URL', 'https://api.deepseek.com/v1/chat/completions')
 
 # 加载样本数据
 def load_samples():
@@ -332,93 +341,150 @@ def export_results(rater_id):
 def query_ai():
     try:
         data = request.json
-        query = data.get('query')
-        context = data.get('context', '')
-        history = data.get('history', [])
+        print("Received request data:", data)
+        
         request_type = data.get('type', 'explanation')
+        print(f"Request type: {request_type}")
 
-        if not DEEPSEEK_API_KEY:
-            return jsonify({"error": "DeepSeek API key not configured"}), 500
+        if not OPENROUTER_API_KEY:
+            return jsonify({"error": "OpenRouter API key not configured"}), 500
 
-        # 构建消息历史
         messages = []
         
         if request_type == 'translation':
-            # 翻译请求使用简单的提示词
+            # 翻译请求：直接翻译，不加任何额外内容
+            text = data.get('text', '')
             messages = [
                 {
                     "role": "system",
-                    "content": "你是一个专业的医学翻译。直接将输入的英文翻译成中文，不要添加任何解释、分析或格式。"
+                    "content": "你是一个专业的医学翻译。直接将输入的英文翻译成中文，不要添加任何解释、分析或格式。保持原文的简洁性。"
                 },
                 {
                     "role": "user",
-                    "content": f"将以下英文翻译成中文：\n{query}"
+                    "content": text
                 }
             ]
-        else:
-            # 解释请求使用原有的格式
-            messages.append({
-                "role": "system",
-                "content": """你是一个专业的医学领域AI助手，主要任务是帮助用户理解医学影像报告和专业术语。
-请严格按照以下markdown格式规范回复：
-
-1. 使用`## 解释内容`作为主标题
-2. 对于每个需要解释的术语：
-   - 使用`### 术语名称`作为二级标题
-   - 使用`**加粗**`标记重要概念
-   - 使用`-`无序列表表示术语的不同方面
-   - 使用`1.` `2.` `3.`有序列表表示步骤或重要说明"""
-            })
             
-            # 添加历史对话
-            for msg in history[-2:]:
-                messages.append({
-                    "role": msg["role"],
-                    "content": msg["content"]
-                })
+        elif request_type == 'rating_assist':
+            # 评分辅助：专业的三维度分析
+            text = data.get('text', '')
+            image_url = data.get('image_url', '')
+            
+            messages = [
+                {
+                    "role": "system",
+                    "content": """你是一个专业的生物医学图像和文本分析专家。请从以下三个维度进行专业评估：
 
-            # 添加当前查询
-            current_prompt = f"""请帮助解释以下查询，严格按照markdown格式规范回复。
+一、图像质量评估
+评估要点：
+- 空间分辨率和解剖结构清晰度
+- 病理细节可见性
+- 噪声和伪影水平
+- 灰度分布
+- 对比度效果
 
-查询内容：{query}
+二、文本质量评估
+评估要点：
+- 医学术语准确性
+- 符合医学报告标准
+- 描述的完整性
+- 诊断结论的清晰度
+- 医学语言的精确性
 
-相关上下文：
-{context}
+三、图文一致性评估
+评估要点：
+- 文字描述与图像特征的对应关系
+- 信息表达的完整性
+- 图文的相互补充性
+- 注释和解释的准确性
 
-请提供简洁明了的解释，包括：
-1. 如果是医学术语，解释其含义和重要性
-2. 如果是普通词汇，提供准确的中文翻译
-3. 如果需要，结合上下文提供更详细的说明"""
+输出要求：
+- 使用markdown二级标题格式
+- 每个维度用2-3句话进行专业点评
+- 同时指出优点和不足
+- 使用专业、简洁的语言"""
+                },
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": f"""请对以下医学图文对进行专业评估：
 
-            messages.append({
-                "role": "user",
-                "content": current_prompt
-            })
+文本描述：{text}
 
-        # 调用DeepSeek API
-        response = requests.post(
-            DEEPSEEK_API_URL,
-            headers={
-                "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
-                "Content-Type": "application/json"
+评估要求：
+1. 仔细分析图像的视觉特征
+2. 详细审查配套的文字报告
+3. 评估图像和文本之间的一致性
+4. 重点关注技术图像质量、医学术语规范性和诊断信息的准确完整性"""
+                        }
+                    ]
+                }
+            ]
+            
+            # 处理图片
+            if image_url:
+                if image_url.startswith('http://127.0.0.1:5000/'):
+                    local_path = image_url.replace('http://127.0.0.1:5000/', '')
+                    abs_path = os.path.join(os.path.dirname(__file__), local_path)
+                    if os.path.exists(abs_path):
+                        with open(abs_path, 'rb') as img_file:
+                            img_data = base64.b64encode(img_file.read()).decode('utf-8')
+                            messages[1]["content"].append({
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/jpeg;base64,{img_data}"
+                                }
+                            })
+                else:
+                    messages[1]["content"].append({
+                        "type": "image_url",
+                        "image_url": {
+                            "url": image_url
+                        }
+                    })
+                    
+        else:
+            # 自由文本查询：医学专业问答
+            query = data.get('query', '')
+            context = data.get('context', '')
+            
+            messages = [
+                {
+                    "role": "system",
+                    "content": """你是一个专业的医学领域AI助手。请根据用户的问题提供专业、准确的解答。
+
+回答要求：
+1. 使用专业、准确的医学术语
+2. 保持回答的简洁性和针对性
+3. 必要时提供相关的医学背景知识
+4. 如果问题不明确，说明需要补充的信息"""
+                },
+                {
+                    "role": "user",
+                    "content": query
+                }
+            ]
+
+        print("Final messages structure:", json.dumps(messages, indent=2))
+
+        # 调用OpenRouter API
+        completion = client.chat.completions.create(
+            extra_headers={
+                "HTTP-Referer": SITE_URL,
+                "X-Title": SITE_NAME,
             },
-            json={
-                "model": "deepseek-chat",
-                "messages": messages,
-                "temperature": 0.7,
-                "max_tokens": 500
-            }
+            model="google/gemini-flash-1.5",
+            messages=messages
         )
 
-        if response.status_code == 200:
-            ai_response = response.json()
-            return jsonify({
-                "response": ai_response['choices'][0]['message']['content']
-            })
-        else:
-            return jsonify({
-                "error": f"API request failed with status {response.status_code}"
-            }), 500
+        response_content = completion.choices[0].message.content
+        print("API response content:", response_content)
+
+        return jsonify({
+            "response": response_content
+        })
 
     except Exception as e:
         print(f"Error querying AI: {e}")

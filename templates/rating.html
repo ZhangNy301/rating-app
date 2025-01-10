@@ -963,14 +963,11 @@
                     <h3><i class="fas fa-robot"></i> AI助手</h3>
                 </div>
                 <div class="ai-quick-actions">
-                    <button class="ai-quick-button" onclick="explainContext()">
-                        <i class="fas fa-book-open"></i> 解释上下文
-                    </button>
-                    <button class="ai-quick-button" onclick="explainTerms()">
-                        <i class="fas fa-graduation-cap"></i> 专业术语解释
-                    </button>
                     <button class="ai-quick-button" onclick="translateCaption()">
                         <i class="fas fa-language"></i> 翻译原文
+                    </button>
+                    <button class="ai-quick-button" onclick="assistRating()">
+                        <i class="fas fa-star-half-alt"></i> 辅助评分
                     </button>
                 </div>
                 <div class="ai-assistant-content" id="aiAssistantContent">
@@ -1248,83 +1245,68 @@
                 .trim();
         }
 
-        async function queryAI(text) {
-            let query = text;
-            let requestType = 'explanation';
-            
+        async function queryAI(data) {
             try {
-                // 检查是否是JSON格式的翻译请求
-                const parsedQuery = JSON.parse(text);
-                if (parsedQuery.type === 'translation') {
-                    query = parsedQuery.text;
-                    requestType = 'translation';
+                // 添加用户消息到历史记录
+                const parsedData = JSON.parse(data);
+                let displayText = '';
+                
+                switch (parsedData.type) {
+                    case 'translation':
+                        displayText = '请翻译此文本';
+                        break;
+                    case 'rating_assist':
+                        displayText = '请分析此图文对';
+                        break;
+                    default:
+                        displayText = parsedData.query;
                 }
-            } catch (e) {
-                // 如果不是JSON格式，使用原始文本
-                query = text || document.getElementById('aiQuery').value.trim();
-            }
-            
-            if (!query) return;
+                
+                addMessageToHistory('user', displayText);
 
-            // 清空输入框
-            document.getElementById('aiQuery').value = '';
-            
-            // 添加用户消息到历史记录
-            const displayText = requestType === 'translation' ? '请翻译此文本' : query;
-            addMessageToHistory('user', displayText);
-
-            // 添加加载消息
-            const loadingMessage = document.createElement('div');
-            loadingMessage.className = 'ai-message assistant';
-            loadingMessage.innerHTML = `
-                <div class="ai-message-icon assistant">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <div class="ai-message-content">
-                    <div class="ai-loading">
-                        <i class="fas fa-spinner fa-spin"></i>
-                        <span>正在${requestType === 'translation' ? '翻译' : '思考'}中...</span>
+                // 添加加载消息
+                const loadingMessage = document.createElement('div');
+                loadingMessage.className = 'ai-message assistant';
+                loadingMessage.innerHTML = `
+                    <div class="ai-message-icon assistant">
+                        <i class="fas fa-robot"></i>
                     </div>
-                </div>
-            `;
-            document.getElementById('aiChatHistory').appendChild(loadingMessage);
+                    <div class="ai-message-content">
+                        <div class="ai-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>正在分析中...</span>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('aiChatHistory').appendChild(loadingMessage);
 
-            try {
                 const response = await fetch('/query_ai', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        query: query,
-                        context: document.getElementById('current-text').textContent,
-                        history: chatHistory,
-                        type: requestType
-                    })
+                    body: data
                 });
-
+                
                 const result = await response.json();
                 
                 // 移除加载消息
                 loadingMessage.remove();
-
+                
                 if (result.error) {
                     addMessageToHistory('assistant', `<div class="ai-error">
                         <i class="fas fa-exclamation-circle"></i>
-                        ${requestType === 'translation' ? '翻译' : '查询'}失败：${result.error}
+                        查询失败：${result.error}
                     </div>`, true);
                 } else {
-                    const formattedResponse = formatAIResponse(result.response, requestType);
+                    const formattedResponse = formatAIResponse(result.response, parsedData.type);
                     addMessageToHistory('assistant', formattedResponse, true);
                 }
             } catch (error) {
-                // 移除加载消息
-                loadingMessage.remove();
-                
-                console.error('Error querying AI:', error);
+                console.error('Error in queryAI:', error);
                 addMessageToHistory('assistant', `<div class="ai-error">
                     <i class="fas fa-exclamation-circle"></i>
-                    ${requestType === 'translation' ? '翻译' : '查询'}失败，请稍后重试
+                    查询失败，请稍后重试
                 </div>`, true);
             }
         }
@@ -1332,29 +1314,58 @@
         // AI助手快捷功能
         function explainContext() {
             const text = document.getElementById('current-text').textContent;
-            queryAI(`请解释这段医学报告的主要内容：${text}`);
+            queryAI(JSON.stringify({
+                type: 'explanation',
+                query: text,
+                context: document.getElementById('current-text').textContent
+            }));
         }
 
         function explainTerms() {
             const text = document.getElementById('current-text').textContent;
-            queryAI(`请列出并解释这段文本中的专业术语：${text}`);
+            queryAI(JSON.stringify({
+                type: 'explanation',
+                query: text,
+                context: document.getElementById('current-text').textContent
+            }));
         }
 
         function translateCaption() {
             const text = document.getElementById('current-text').textContent;
-            const translationRequest = {
+            queryAI(JSON.stringify({
                 type: 'translation',
-                text: text,
-                system_prompt: "你是一个专业的医学翻译。请直接将输入的英文医学文本翻译成中文。要求：1. 直接给出翻译结果 2. 不要解释 3. 不要添加markdown格式 4. 不要分析 5. 保持原文的简洁性。"
-            };
-            queryAI(JSON.stringify(translationRequest));
+                text: text
+            }));
         }
 
-        // 添加文本选择事件监听
-        document.addEventListener('mouseup', function(event) {
-            const selectedText = window.getSelection().toString().trim();
-            if (selectedText && event.ctrlKey) {
-                queryAI(selectedText);
+        function assistRating() {
+            const text = document.getElementById('current-text').textContent;
+            const imageUrl = document.getElementById('current-image').src;
+            queryAI(JSON.stringify({
+                type: 'rating_assist',
+                text: text,
+                image_url: imageUrl
+            }));
+        }
+
+        // 处理自由文本查询
+        function handleFreeQuery() {
+            const query = document.getElementById('aiQuery').value.trim();
+            if (!query) return;
+            
+            // 清空输入框
+            document.getElementById('aiQuery').value = '';
+            
+            queryAI(JSON.stringify({
+                type: 'explanation',
+                query: query
+            }));
+        }
+
+        // 添加输入框的回车事件监听
+        document.getElementById('aiQuery').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleFreeQuery();
             }
         });
 

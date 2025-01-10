@@ -29,13 +29,20 @@ ENV/
 *.sqlite3
 
 # Environment variables
-.env
+# .env
+# .env.local
+# .env.*
+
+# Logs
+*.log
 
 # IDE
-.idea/
 .vscode/
-*.swp
-*.swo
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
 
 # Exported results
 ratings_*.json 
