@@ -39,3 +39,5 @@ ENV/
 
 # Exported results
 ratings_*.json 
+
+rate/
