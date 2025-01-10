@@ -1,0 +1,1 @@
+ Sequencing POM images of the ripple formation and diffusion from 0 s to 4.8 s with an interval of 0.8 s. After the pump beam is removed, the ripple stops spreading and is stored in the ALCs

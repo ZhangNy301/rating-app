@@ -1,0 +1,1 @@
+ Still images of typical cells selected for evaluation. Only cells expressing both EB1-GFP (green) and TagRFP (red) or γ-tubulin-TagRFP fusions (red) were evaluated

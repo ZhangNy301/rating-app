@@ -1,0 +1,1 @@
+ Global comparison of ThT fluorescence for all proteins, in all three DPRs. Mutants are arranged from high (light shade, left extreme) to low (dark shade, right extreme) ThT fluorescence (complete data in Fig. S33). The high ThT fluorescence represents an increase in fibrillar aggregates in solution. Numbers represent the lowest and highest value of ThT fluorescence

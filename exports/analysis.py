@@ -13,7 +13,7 @@ with open(os.path.join(base_path, 'selected_pairs.json'), 'r', encoding='utf-8')
 model_ranks = {item['image'].split('.')[0]: item['stratified_rank'] for item in selected_pairs}
 
 # 读取每个评分者的数据并计算相关性
-raters = ['ZhangNingyi', 'Xiexinyu', 'QianXin', 'LiangZhichao', 'GaoJie']
+raters = ['ZhangNingyi', 'Xiexinyu', 'QianXin', 'LiangZhichao', 'GaoJie', 'test', 'XieJiefeng']
 correlations = {}
 
 for rater in raters:

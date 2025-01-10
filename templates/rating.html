@@ -216,15 +216,51 @@
         }
         .progress {
             margin-bottom: 30px;
-            text-align: center;
-            padding: 20px;
+            padding: 15px;
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            border: 1px solid #4CAF50;
+        }
+        .progress-header {
+            text-align: center;
+            margin-bottom: 10px;
         }
         .progress h2 {
             margin: 0;
-            color: #333;
+            color: #2c3e50;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .progress-text {
+            color: #2c3e50;
+            font-size: 1em;
+            margin: 5px 0;
+        }
+        .progress-bar-container {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: #4CAF50;
+            transition: width 0.8s ease-in-out;
+        }
+        @keyframes progressPulse {
+            0% {
+                box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+            }
+            50% {
+                box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+            }
+            100% {
+                box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+            }
         }
         /* AI助手样式 */
         .ai-assistant {
@@ -820,10 +856,11 @@
                     <div class="rating-tooltip">
                         <h4>评分参考要点：</h4>
                         <ul>
-                            <li>图像清晰度和分辨率</li>
-                            <li>图像构图和美感</li>
-                            <li>图像内容的完整性</li>
-                            <li>图像是否存在噪点、模糊等问题</li>
+                            <li>医学图像的清晰度和对比度</li>
+                            <li>关键结构和病变区域的可见性</li>
+                            <li>图像放大倍数是否合适</li>
+                            <li>染色/成像方法的质量</li>
+                            <li>标尺/比例尺的显示是否规范</li>
                         </ul>
                     </div>
                     <div class="star-rating" id="image-quality-rating">
@@ -849,10 +886,11 @@
                     <div class="rating-tooltip">
                         <h4>评分参考要点：</h4>
                         <ul>
-                            <li>文本的语法和表达是否准确</li>
-                            <li>文本内容是否完整、连贯</li>
-                            <li>专业术语使用是否恰当</li>
-                            <li>文本是否存在明显错误或歧义</li>
+                            <li>医学术语使用是否准确规范</li>
+                            <li>实验/临床方法描述是否清晰</li>
+                            <li>关键发现和结果描述是否完整</li>
+                            <li>数据和参数表述是否准确</li>
+                            <li>专业缩写和单位使用是否恰当</li>
                         </ul>
                     </div>
                     <div class="star-rating" id="text-quality-rating">
@@ -878,10 +916,11 @@
                     <div class="rating-tooltip">
                         <h4>评分参考要点：</h4>
                         <ul>
-                            <li>图像与文本描述的内容是否匹配</li>
-                            <li>文本是否准确描述了图像中的关键信息</li>
-                            <li>图文之间是否存在明显的矛盾</li>
-                            <li>图文的细节描述是否一致</li>
+                            <li>图像中标注的结构与文字描述是否对应</li>
+                            <li>实验/临床条件描述是否与图像相符</li>
+                            <li>定量/定性结果是否与图像表现一致</li>
+                            <li>图像中的比例尺/标记是否与文本描述匹配</li>
+                            <li>病理/影像特征描述是否准确对应</li>
                         </ul>
                     </div>
                     <div class="star-rating" id="consistency-rating">
@@ -911,8 +950,13 @@
 
         <div class="right-panel">
             <div class="progress">
-                <h2>评分进度</h2>
-                <p id="progress-text">0/0</p>
+                <div class="progress-header">
+                    <h2>评分进度</h2>
+                    <div class="progress-text" id="progress-text">0/0</div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
             </div>
             <div class="ai-assistant">
                 <div class="ai-assistant-header">
@@ -986,8 +1030,13 @@
         // 更新进度显示
         function updateProgress() {
             const progressText = document.getElementById('progress-text');
+            const progressBar = document.getElementById('progress-bar');
             const totalRated = Object.keys(ratings).length;
-            progressText.textContent = `${totalRated}/${samples.length}`;
+            const totalSamples = samples.length;
+            const progressPercentage = (totalRated / totalSamples) * 100;
+            
+            progressText.textContent = `${totalRated}/${totalSamples}`;
+            progressBar.style.width = `${progressPercentage}%`;
         }
 
         // 显示当前样本

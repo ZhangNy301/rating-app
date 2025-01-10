@@ -1,0 +1,1 @@
+ TICs was created by analysing the ROI (green) positioned in the tumor and the reference ROI (yellow) in the bladder wall. TICs showed the lesion was initially enhanced at 9 s, the time to peak was 13 s and wash-out occured at 40s

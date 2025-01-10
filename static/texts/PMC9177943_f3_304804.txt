@@ -1,0 +1,1 @@
+ Immunofluorescence of cells infected with or without DSV. Cells were fixed with 4% paraformaldehyde and stained with anti-snail antibody followed by secondary antibody labeled with Alexa Flour–488. Cells were visualized with Olympus Fluoview FV1200 confocal microscope. Scale bar=20 µm

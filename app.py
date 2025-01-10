@@ -50,43 +50,47 @@ def load_samples():
     samples = []
     static_dir = os.path.join(os.path.dirname(__file__), 'static')
     
-    # 首先尝试从selected_pairs.json加载
-    selected_pairs_path = os.path.join(static_dir, 'selected_pairs.json')
-    if os.path.exists(selected_pairs_path):
+    # 首先尝试从RefineNet_select_75.json加载
+    metadata_path = os.path.join(static_dir, 'RefineNet_select_75.json')
+    if os.path.exists(metadata_path):
         try:
-            with open(selected_pairs_path, 'r', encoding='utf-8') as f:
-                loaded_samples = json.load(f)
-                # 转换数据格式
-                converted_samples = []
-                for sample in loaded_samples:
-                    # 从image字段获取文件名
-                    image_filename = sample.get('image', '')
+            with open(metadata_path, 'r', encoding='utf-8') as f:
+                metadata = json.load(f)
+                for item in metadata:
+                    image_filename = item.get('image', '')
                     if image_filename:
                         # 检查图片文件是否存在
                         image_path = os.path.join(static_dir, 'images', image_filename)
                         if os.path.exists(image_path):
                             # 构建正确的图片URL
                             image_url = f'/static/images/{quote(image_filename)}'
+                            # 从文本文件读取描述
+                            text_content = item.get('text', '')
+                            if not text_content:
+                                text_file = os.path.join(static_dir, 'texts', f"{os.path.splitext(image_filename)[0]}.txt")
+                                if os.path.exists(text_file):
+                                    with open(text_file, 'r', encoding='utf-8') as tf:
+                                        text_content = tf.read().strip()
+                            
                             # 构建新的样本格式
-                            converted_sample = {
-                                'id': os.path.splitext(image_filename)[0],  # 移除扩展名
+                            sample = {
+                                'id': os.path.splitext(image_filename)[0],
                                 'image_url': image_url,
-                                'text': sample.get('text', '')
+                                'text': text_content
                             }
-                            converted_samples.append(converted_sample)
+                            samples.append(sample)
                         else:
                             print(f"Warning: Image file not found: {image_path}")
                 
-                if not converted_samples:
-                    print("Warning: No valid samples found in selected_pairs.json")
-                return converted_samples
+                if samples:
+                    return samples
+                print("Warning: No valid samples found in RefineNet_select_75.json")
         except Exception as e:
-            print(f"Error loading selected_pairs.json: {e}")
-            print(f"Error details: {str(e)}")
+            print(f"Error loading RefineNet_select_75.json: {e}")
             import traceback
             traceback.print_exc()
     
-    # 如果selected_pairs.json不存在或加载失败，则扫描目录
+    # 如果RefineNet_select_75.json不存在或加载失败，则扫描目录
     images_dir = os.path.join(static_dir, 'images')
     texts_dir = os.path.join(static_dir, 'texts')
     
@@ -123,6 +127,10 @@ def load_samples():
         })
     
     return samples
+
+@app.route('/static/selected_pairs.json')
+def redirect_to_new_json():
+    return send_file('static/RefineNet_select_75.json')
 
 @app.route('/')
 def index():

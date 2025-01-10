@@ -1,0 +1,1 @@
+ Example of flattened organoid (3D rendering) on the bottom of the cell culture dish, top view.

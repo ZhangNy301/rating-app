@@ -1,0 +1,1 @@
+ Axial T2-weighted image of a 61-year-old patient with glioblastoma and the region of interest (red) used for texture analysis;

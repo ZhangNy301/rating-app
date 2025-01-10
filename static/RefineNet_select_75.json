@@ -1,0 +1,527 @@
+[
+  {
+    "image": "PMC6243172_F2_398031.jpg",
+    "text": "Infected small intestine tissue of jungle cat to Toxocara cati. Necrosis (black arrows) inflammatory cells infiltration [eosinophils (red arrows), lymphocytes (blue arrows)]. H&E staining. ×40 magnification.",
+    "logit": 3.887531280517578,
+    "overall_rank": 14823,
+    "stratified_rank": 1
+  },
+  {
+    "image": "PMC3187774_pone-0025451-g001_110959.jpg",
+    "text": " The segmented edema/tumor infiltration (blue), enhancement (yellow) and necrosis (orange) are seen overlaid on a base post- contrast T1WI",
+    "logit": 3.81598162651062,
+    "overall_rank": 22645,
+    "stratified_rank": 2
+  },
+  {
+    "image": "PMC6067901_fig5_347978.jpg",
+    "text": " IFS of an embryo in which a single blastomere was injected with NvPar-3 guide RNAs and Cas9 and green dextran. Red arrowheads indicate the apical constriction and delamination of ectodermal cells in the mutated clone of cells. Note the different layers of nuclei stained with DAPI. Asterisks indicate the site of gastrulation",
+    "logit": 3.6554934978485107,
+    "overall_rank": 44564,
+    "stratified_rank": 3
+  },
+  {
+    "image": "PMC7795077_materials-14-00222-f005_338503.jpg",
+    "text": " Representative histological images at higher magnification showing InterOss® granules (yellow stars) well integrated and completely covered with newly formed bone (NB) in SHAM rats (left)",
+    "logit": 3.4602134227752686,
+    "overall_rank": 77579,
+    "stratified_rank": 4
+  },
+  {
+    "image": "PMC4823597_phy212728-fig-0001_19015.jpg",
+    "text": "T2‐weighted MRI of abdomen, coronal view. The arrow indicates a 5‐cm lesion above the left kidney consistent with an adrenal mass.",
+    "logit": 3.403947114944458,
+    "overall_rank": 88027,
+    "stratified_rank": 5
+  },
+  {
+    "image": "PMC6480084_ijms-20-01747-f004_470275.jpg",
+    "text": " Representative AFM topography image of maltose neoglycosylated collagen films (50 × 50 µm2, 512 × 512 pixel, Z-scale 1.4 µm)",
+    "logit": 3.290632486343384,
+    "overall_rank": 109963,
+    "stratified_rank": 6
+  },
+  {
+    "image": "PMC8505106_fig1_79903.jpg",
+    "text": " atrophic nonunion with fracture of the DHS syste",
+    "logit": 3.1927525997161865,
+    "overall_rank": 129564,
+    "stratified_rank": 7
+  },
+  {
+    "image": "PMC6197951_fig0010_384786.jpg",
+    "text": "Computed tomography of the chest showed linear metallic density in the pulmonary trunk and a small amount of pericardial fluid.",
+    "logit": 3.0794334411621094,
+    "overall_rank": 152717,
+    "stratified_rank": 8
+  },
+  {
+    "image": "PMC7286583_FIG1_189350.jpg",
+    "text": " nodule with lobulated sign in the left upper lobe",
+    "logit": 2.921320915222168,
+    "overall_rank": 185249,
+    "stratified_rank": 9
+  },
+  {
+    "image": "PMC8400638_medicina-57-00790-f002_47101.jpg",
+    "text": "CT scan—large left-sided tension hemothorax with the mediastinal shift.",
+    "logit": 2.864898681640625,
+    "overall_rank": 196997,
+    "stratified_rank": 10
+  },
+  {
+    "image": "PMC6305934_brb31166-fig-0002_414951.jpg",
+    "text": " Representative sets of TTC‐stained brain slices at 7d after the left and right MCAO, respectively",
+    "logit": 2.7682430744171143,
+    "overall_rank": 217306,
+    "stratified_rank": 11
+  },
+  {
+    "image": "PMC9177943_f3_304804.jpg",
+    "text": " Immunofluorescence of cells infected with or without DSV. Cells were fixed with 4% paraformaldehyde and stained with anti-snail antibody followed by secondary antibody labeled with Alexa Flour–488. Cells were visualized with Olympus Fluoview FV1200 confocal microscope. Scale bar=20 µm",
+    "logit": 2.681119203567505,
+    "overall_rank": 235788,
+    "stratified_rank": 12
+  },
+  {
+    "image": "PMC8960066_F1_236868.jpg",
+    "text": " Representative image of optical coherence tomography (OCT)-identified plaque rupture (right panel) in angiographically intermediate coronary lesions (arrowhead in left panel)",
+    "logit": 2.5775070190429688,
+    "overall_rank": 257717,
+    "stratified_rank": 13
+  },
+  {
+    "image": "PMC3161946_F4_106266.jpg",
+    "text": " Confocal image of a transverse section of an ED6 retina processed by double-label immunohistochemistry for vimentin (magenta) and DAPI nuclear staining (blue",
+    "logit": 2.463193893432617,
+    "overall_rank": 282404,
+    "stratified_rank": 14
+  },
+  {
+    "image": "PMC7031351_F5_121284.jpg",
+    "text": " Postoperative magnetic resonance imaging showing resection of the anterior and middle corpus callosum except for the splenium",
+    "logit": 2.343484878540039,
+    "overall_rank": 308112,
+    "stratified_rank": 15
+  },
+  {
+    "image": "PMC4610995_Fig4_434756.jpg",
+    "text": "Histologic findings on cyst (hematoxylin and eosin stain, original magnification ×200). Focal epithelial interruption associated with chronic active inflammation",
+    "logit": 2.289729118347168,
+    "overall_rank": 319530,
+    "stratified_rank": 16
+  },
+  {
+    "image": "PMC7555878_ijms-21-06944-f001_272347.jpg",
+    "text": " Actin staining of human osteoblasts on collagen-coated coverslips in unstimulated cells, after electrical stimulation (ES) with 1.4 V cont. and 2.8 V after three and seven days. The 2.8 V group was stimulated 3 × 45 min per day, while the 1.4 V cont. group was stimulated continuously with 1.4 V. The scale measures 50 µm",
+    "logit": 2.229642868041992,
+    "overall_rank": 332387,
+    "stratified_rank": 17
+  },
+  {
+    "image": "PMC3195078_pone-0025943-g003_111835.jpg",
+    "text": " Representative illustrations (200 × magnification) of Masson-stained liver sections were taken from rats treated with CCl4 + PAG",
+    "logit": 2.135035276412964,
+    "overall_rank": 353126,
+    "stratified_rank": 18
+  },
+  {
+    "image": "PMC7197184_Fig1_162476.jpg",
+    "text": " TICs was created by analysing the ROI (green) positioned in the tumor and the reference ROI (yellow) in the bladder wall. TICs showed the lesion was initially enhanced at 9 s, the time to peak was 13 s and wash-out occured at 40s",
+    "logit": 1.9643921852111816,
+    "overall_rank": 390243,
+    "stratified_rank": 19
+  },
+  {
+    "image": "PMC7529903_Fig5_264578.jpg",
+    "text": " 3D T2*-weighted (FLASH) image showing the fracture site (red arrow) and callus formation (green arrow) over time course",
+    "logit": 1.9451110363006592,
+    "overall_rank": 394521,
+    "stratified_rank": 20
+  },
+  {
+    "image": "PMC6775241_F1_45262.jpg",
+    "text": " Coronal PET/CT maximum intensity projection (MIP) performed approximately 3 months after initial diagnosis, demonstrating the large FDG-avid mass in the right retroperitoneal space. FDG-avidity in the inferior aspect of the image in the figure corresponds to physiological uptake in the urinary bladder",
+    "logit": 1.7973520755767822,
+    "overall_rank": 426726,
+    "stratified_rank": 21
+  },
+  {
+    "image": "PMC8988230_fig6_246053.jpg",
+    "text": " Example of flattened organoid (3D rendering) on the bottom of the cell culture dish, top view.",
+    "logit": 1.711507797241211,
+    "overall_rank": 445692,
+    "stratified_rank": 22
+  },
+  {
+    "image": "PMC7698154_materials-13-05163-f003_308928.jpg",
+    "text": " Microstructure of Si-MRE for EV syste",
+    "logit": 1.6494073867797852,
+    "overall_rank": 459547,
+    "stratified_rank": 23
+  },
+  {
+    "image": "PMC8280522_F2_9511.jpg",
+    "text": " scoliosis of the whole spine;",
+    "logit": 1.5436785221099854,
+    "overall_rank": 483014,
+    "stratified_rank": 24
+  },
+  {
+    "image": "PMC6974420_F5_103868.jpg",
+    "text": " TEM prior to treatment showing enlarged endoplasmic reticulum (RER) and abundant cytoplasm in fibroblast (×23500 original magnification) (arrows indicate fibroblast)",
+    "logit": 1.4603359699249268,
+    "overall_rank": 501642,
+    "stratified_rank": 25
+  },
+  {
+    "image": "PMC7015854_Fig8_115839.jpg",
+    "text": " Fluorescence images of cells from enrichment cultures after 8 and 11 transfers stained with DAPI (violet) and hybridized with nucleotide probes that target MK-D1 (green) and Bacteria (red). The images are different fields of view to those shown in Fig. 1b, c, which were taken at the same time",
+    "logit": 1.3273630142211914,
+    "overall_rank": 531319,
+    "stratified_rank": 26
+  },
+  {
+    "image": "PMC7732822_Fig4_319910.jpg",
+    "text": " Comparison between the hearing loss group without tinnitus and the control group. In the hearing loss group without tinnitus less gray matter volume was observed in the cingulate cortex (pink), the orbitofrontal cortex (green), and the middle temporal gyri (yellow), depicted on a medial view of the sagittal plane of the right hemisphere. Additional clusters with less gray matter volume, not shown here, were observed in the superior and inferior temporal gyri and the fusiform gyrus (see Table 4). The comparison between the hearing loss group with tinnitus and the controls revealed no significant differences and is therefore not shown in this figure",
+    "logit": 1.2359535694122314,
+    "overall_rank": 551901,
+    "stratified_rank": 27
+  },
+  {
+    "image": "PMC7840184_fig7_354630.jpg",
+    "text": " Analysis of spontaneous tubular motion in vivo. Low magnification incident light image of the mouse testis shows several superficial seminiferous tubule segments, testicular blood vessels (white asterisk; note that unobstructed blood supply (i.e. visualizing erythrocyte flow) is checked routinely), and a specific segment outlined by red dotted lines. After time-lapse imaging, this segment is digitally straightened and subjected to motion analysis. For different time points (i–v), pixel movement and its propagation are reflected by merged pseudocolor images. Directionality is indicated by the black arrow in (CI). From a kymograph (CIII), the time–space relationship of tubular motion becomes apparent (time points i–v as indicated by dashed vertical lines)",
+    "logit": 1.1844367980957031,
+    "overall_rank": 563696,
+    "stratified_rank": 28
+  },
+  {
+    "image": "PMC4359190_Fig1_367350.jpg",
+    "text": " Three kinetic parametric maps show increased vascular permeability (Ktrans map), leakage space (",
+    "logit": 1.0826146602630615,
+    "overall_rank": 586617,
+    "stratified_rank": 29
+  },
+  {
+    "image": "PMC7101382_Fig5_142359.jpg",
+    "text": " Sequencing POM images of the ripple formation and diffusion from 0 s to 4.8 s with an interval of 0.8 s. After the pump beam is removed, the ripple stops spreading and is stored in the ALCs",
+    "logit": 0.9393215775489807,
+    "overall_rank": 619162,
+    "stratified_rank": 30
+  },
+  {
+    "image": "PMC6600745_materials-12-01735-f002_1897.jpg",
+    "text": "Fluorescence microscopy. View of the accumulation of mitochondrial staining in red and green 24 h after seeding (40× magnification).",
+    "logit": 0.8940750360488892,
+    "overall_rank": 629518,
+    "stratified_rank": 31
+  },
+  {
+    "image": "PMC8243818_Fig2_483270.jpg",
+    "text": " Navigational MRI and target point of a patient without preoperative CST",
+    "logit": 0.8114701509475708,
+    "overall_rank": 648427,
+    "stratified_rank": 32
+  },
+  {
+    "image": "PMC8896020_fig-8_213235.jpg",
+    "text": " Wild-type woad flower",
+    "logit": 0.7194271087646484,
+    "overall_rank": 669811,
+    "stratified_rank": 33
+  },
+  {
+    "image": "PMC8882299_Fig2_209101.jpg",
+    "text": " Contrast-enhanced CT showed an regularly shaped mass with the uniform density and the moderate enhancement.",
+    "logit": 0.6236116886138916,
+    "overall_rank": 691935,
+    "stratified_rank": 34
+  },
+  {
+    "image": "PMC9095393_fig4_277273.jpg",
+    "text": " enhanced CT imag",
+    "logit": 0.5167824029922485,
+    "overall_rank": 716715,
+    "stratified_rank": 35
+  },
+  {
+    "image": "PMC5028337_Fig4_74238.jpg",
+    "text": " CT urography (a–d) revealed distended urinary bladder with linear gas-attenuation changes (thin arrows) along the right lateral and upper posterior walls",
+    "logit": 0.44912293553352356,
+    "overall_rank": 732407,
+    "stratified_rank": 36
+  },
+  {
+    "image": "PMC9243661_F2_327919.jpg",
+    "text": " The appearance and morphology of the kidneys from CTRL group;",
+    "logit": 0.32780730724334717,
+    "overall_rank": 760542,
+    "stratified_rank": 37
+  },
+  {
+    "image": "PMC7565295_brainsci-10-00638-f004_275971.jpg",
+    "text": " Axial T2-weighted image of a 61-year-old patient with glioblastoma and the region of interest (red) used for texture analysis;",
+    "logit": 0.2155376821756363,
+    "overall_rank": 786711,
+    "stratified_rank": 38
+  },
+  {
+    "image": "PMC5577297_Fig1_209433.jpg",
+    "text": " Immunoelectron microscopy reveals the localization of fascin-1 also in foot processes near the slit diaphragm. The magnification is 40,000x",
+    "logit": 0.12343551218509674,
+    "overall_rank": 808087,
+    "stratified_rank": 39
+  },
+  {
+    "image": "PMC7877541_F2_366180.jpg",
+    "text": " Examples of mitotic spindles from parental DLD-1 cells and cells from 4N DLD-1 clones S1, S2, L1, and L2 (top-to-bott",
+    "logit": 0.09009046107530594,
+    "overall_rank": 815678,
+    "stratified_rank": 40
+  },
+  {
+    "image": "PMC8003237_animals-11-00875-f001_404096.jpg",
+    "text": " Perianal gland adenoma composed of uniform broad trabeculae and islands (asterisks) of polygonal cells surrounded by a single layer of attenuated basaloid reserve cells",
+    "logit": -0.043953731656074524,
+    "overall_rank": 846473,
+    "stratified_rank": 41
+  },
+  {
+    "image": "PMC5244721_Fig1_116145.jpg",
+    "text": "MRI showing mucocele of gall bladder (coronal plane)",
+    "logit": -0.14428488910198212,
+    "overall_rank": 869488,
+    "stratified_rank": 42
+  },
+  {
+    "image": "PMC6123624_Fig2_363352.jpg",
+    "text": " FRAP experiments for a LLC coacervate. The inserts show droplets before and after bleaching at different time points (scale bars 2 µm)",
+    "logit": -0.1738024652004242,
+    "overall_rank": 876336,
+    "stratified_rank": 43
+  },
+  {
+    "image": "PMC9361630_Fig4_367162.jpg",
+    "text": " 4 month-postoperative right-eye whole retinal, deep, and choroidal OCT angiogram show retinal ischemia predominantly in the deep plexus. HD structural line OCT scanning the fovea shows atrophy",
+    "logit": -0.24589988589286804,
+    "overall_rank": 892719,
+    "stratified_rank": 44
+  },
+  {
+    "image": "PMC6098612_Fig6_355768.jpg",
+    "text": " Pores with shape (c",
+    "logit": -0.3517993986606598,
+    "overall_rank": 916849,
+    "stratified_rank": 45
+  },
+  {
+    "image": "PMC4527188_Fig1_412500.jpg",
+    "text": " Representative images of AMT-SUV, T1-GAD, DWI-ADC and IDSI-cellularity obtained from two patients with a grade II glioma (c and d",
+    "logit": -0.4680386185646057,
+    "overall_rank": 942822,
+    "stratified_rank": 46
+  },
+  {
+    "image": "PMC8620805_jcm-10-05375-f005_122522.jpg",
+    "text": " Postoperative gadolinium-enhanced T1-weighted axial MR image demonstrated complete resection of the tumor bulk and additional resect",
+    "logit": -0.5772518515586853,
+    "overall_rank": 967325,
+    "stratified_rank": 47
+  },
+  {
+    "image": "PMC7016030_fig2_115921.jpg",
+    "text": " Axial view of contrast enhancement",
+    "logit": -0.692692220211029,
+    "overall_rank": 992770,
+    "stratified_rank": 48
+  },
+  {
+    "image": "PMC5366753_F8_145557.jpg",
+    "text": " Micrographs of transverse sections through the pallium of Xenopus laevis at the larval stage 54 showing the distribution of the progenitor markers Pax6 and Lhx2. The color code for the used markers is indicated",
+    "logit": -0.7162883281707764,
+    "overall_rank": 997970,
+    "stratified_rank": 49
+  },
+  {
+    "image": "PMC5743792_F3_257159.jpg",
+    "text": " Representative light (upper) and fluorescence (lower) stereomicrographs of cross-section of the ischemia-reperfusion (IR) hearts 3 h after intravenous injection of saline, FITC alone, or FITC-NP",
+    "logit": -0.8796129822731018,
+    "overall_rank": 1033828,
+    "stratified_rank": 50
+  },
+  {
+    "image": "PMC7933332_Fig2_384391.jpg",
+    "text": " 24 months post-operatively, the border between new bone and condyle vanished, the condyle was well remodeled",
+    "logit": -0.9010180234909058,
+    "overall_rank": 1038462,
+    "stratified_rank": 51
+  },
+  {
+    "image": "PMC8716214_fig5_153092.jpg",
+    "text": " Changes in colocalization of SCF (green, G) with c-Kit (red, R",
+    "logit": -1.0213818550109863,
+    "overall_rank": 1064363,
+    "stratified_rank": 52
+  },
+  {
+    "image": "PMC5233680_F8_113761.jpg",
+    "text": " No visible lesions in heart",
+    "logit": -1.135967493057251,
+    "overall_rank": 1088443,
+    "stratified_rank": 53
+  },
+  {
+    "image": "PMC7925848_F3_382500.jpg",
+    "text": " toluidine blue stained tissue at 5X magnification of the different experimental groups",
+    "logit": -1.2445662021636963,
+    "overall_rank": 1111091,
+    "stratified_rank": 54
+  },
+  {
+    "image": "PMC3338603_pone-0036137-g010_135824.jpg",
+    "text": " Measurement of diameters of NUP62−/NUP214+ NPCs in S12 cells",
+    "logit": -1.2925751209259033,
+    "overall_rank": 1121022,
+    "stratified_rank": 55
+  },
+  {
+    "image": "PMC7491278_f1_254108.jpg",
+    "text": " T. gondii cysts quantification of the brain regions analyse",
+    "logit": -1.4579684734344482,
+    "overall_rank": 1154881,
+    "stratified_rank": 56
+  },
+  {
+    "image": "PMC7147334_F2_149274.jpg",
+    "text": " Preoperative PET scan showed a marked, asymmetrical decrease in putaminal 18F-DOPA uptake, consistent with the diagnosis of idiopathic PD",
+    "logit": -1.4944729804992676,
+    "overall_rank": 1162240,
+    "stratified_rank": 57
+  },
+  {
+    "image": "PMC3250491_pone-0029919-g005_120979.jpg",
+    "text": " Still images of typical cells selected for evaluation. Only cells expressing both EB1-GFP (green) and TagRFP (red) or γ-tubulin-TagRFP fusions (red) were evaluated",
+    "logit": -1.6529765129089355,
+    "overall_rank": 1193739,
+    "stratified_rank": 58
+  },
+  {
+    "image": "PMC4308923_Fig7_353457.jpg",
+    "text": " Images of the hematoxylin and eosin (H&E)-stained sections of the tumours and immunohistochemical analysis of the adjacent sections were performed with the indicated antibodies as shown in the figure. Images were captured at magnifications of 200X",
+    "logit": -1.745720624923706,
+    "overall_rank": 1211997,
+    "stratified_rank": 59
+  },
+  {
+    "image": "PMC5985438_F1_323569.jpg",
+    "text": " Phase contrast images demonstrate the ability of selected hDPSCs to aggregate in floating three-dimensional spheres, as early as 24 h after cell seeding, and to grow in size through culture time, up to passage 8. On the right, a higher magnification emphasizing the semi-transparent appearance of 3D spheres. Bar: 100 μm",
+    "logit": -1.910179853439331,
+    "overall_rank": 1243444,
+    "stratified_rank": 60
+  },
+  {
+    "image": "PMC6925236_Fig9_88609.jpg",
+    "text": " details of region ",
+    "logit": -2.0210375785827637,
+    "overall_rank": 1264255,
+    "stratified_rank": 61
+  },
+  {
+    "image": "PMC6063010_Fig3_346849.jpg",
+    "text": " Algebra calculation (18F-florbetaben-18F-flutemetamol",
+    "logit": -2.0816450119018555,
+    "overall_rank": 1275455,
+    "stratified_rank": 62
+  },
+  {
+    "image": "PMC9320705_insects-13-00638-f008_353881.jpg",
+    "text": " accessory gland type II (internal view",
+    "logit": -2.165975570678711,
+    "overall_rank": 1291028,
+    "stratified_rank": 63
+  },
+  {
+    "image": "PMC5414183_f3_159643.jpg",
+    "text": " through the cytoplasm (STAD)",
+    "logit": -2.2688586711883545,
+    "overall_rank": 1309674,
+    "stratified_rank": 64
+  },
+  {
+    "image": "PMC7264163_F1_181909.jpg",
+    "text": " Schematic diagram showing the structure and composition of the developed CaO2 + MnO2@PLGA MPs that act as an oxygen-generating system to enhance tissue oxygenation.",
+    "logit": -2.3689379692077637,
+    "overall_rank": 1327361,
+    "stratified_rank": 65
+  },
+  {
+    "image": "PMC6620343_Fig4_6768.jpg",
+    "text": " Immunocytochemistry of pSSC colonies using PGP9.5 (green), CD14 (red) antibodies and DAPI (blue). Scale bars = 20 μm",
+    "logit": -2.5468506813049316,
+    "overall_rank": 1358489,
+    "stratified_rank": 66
+  },
+  {
+    "image": "PMC3682965_pone-0066863-g004_211384.jpg",
+    "text": " Micro CT scanning and reconstruction of the tooth showing the indistinct cementodentinal junction and the irregular cementum.",
+    "logit": -2.7246344089508057,
+    "overall_rank": 1388448,
+    "stratified_rank": 67
+  },
+  {
+    "image": "PMC3097681_F1_95990.jpg",
+    "text": " lower pol",
+    "logit": -2.773210287094116,
+    "overall_rank": 1396399,
+    "stratified_rank": 68
+  },
+  {
+    "image": "PMC6996891_F6_110195.jpg",
+    "text": " Global comparison of ThT fluorescence for all proteins, in all three DPRs. Mutants are arranged from high (light shade, left extreme) to low (dark shade, right extreme) ThT fluorescence (complete data in Fig. S33). The high ThT fluorescence represents an increase in fibrillar aggregates in solution. Numbers represent the lowest and highest value of ThT fluorescence",
+    "logit": -2.900613307952881,
+    "overall_rank": 1417362,
+    "stratified_rank": 69
+  },
+  {
+    "image": "PMC7772359_F4_332154.jpg",
+    "text": " IF analysis of HIF1-α and Nestin following Nestin knockdown. Bar = 20 μm. Magnification, ×630",
+    "logit": -3.0511012077331543,
+    "overall_rank": 1441172,
+    "stratified_rank": 70
+  },
+  {
+    "image": "PMC7476998_Fig1_249982.jpg",
+    "text": " Images of non-inoculated roots without detectable bacterial signals",
+    "logit": -3.1788973808288574,
+    "overall_rank": 1460578,
+    "stratified_rank": 71
+  },
+  {
+    "image": "PMC6602954_Fig3_2385.jpg",
+    "text": " Transmission electron micrograph of a COS7 cell stably expressing SEIP-1::Venus protein. The cell was incubated with oleic acid prior to fixation, and stained with diaminobenzidine (DAB), uranyl acetate, and osmium tetroxide prior to electron microscopy. No dark deposits were detected in this negative control. Scale bar = 1 μm.",
+    "logit": -3.3740651607513428,
+    "overall_rank": 1489265,
+    "stratified_rank": 72
+  },
+  {
+    "image": "PMC8248811_F5_484606.jpg",
+    "text": " Structural channels: T1/T2",
+    "logit": -3.4145262241363525,
+    "overall_rank": 1494901,
+    "stratified_rank": 73
+  },
+  {
+    "image": "PMC6380215_F0002_437776.jpg",
+    "text": " The conventional (K165) and the corrected (R165) constructs of the embryonic CaV1.1e splice variant lacking exon 29",
+    "logit": -3.7281177043914795,
+    "overall_rank": 1533389,
+    "stratified_rank": 74
+  },
+  {
+    "image": "PMC5856896_Fig9_290505.jpg",
+    "text": " Beginning of stage 2 freezin",
+    "logit": -3.743328094482422,
+    "overall_rank": 1534963,
+    "stratified_rank": 75
+  }
+]
